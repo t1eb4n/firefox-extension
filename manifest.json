@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.0",
+  "name": "T1eB4n Firefox Extension",
+  "description": "Personal set of Firefox extended functionality",
+  "icons": {
+    "512": "imgs/icon.512.png"
+  },
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "tabHide"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://news.ycombinator.com/*"],
+      "js": ["js/site_specific/news.ycombinator.com.js"]
+    }
+  ],
+  "sidebar_action": {
+    "default_title": "T1eB4n Bar",
+    "default_panel": "html/sidebar.html",
+    "default_icon": "imgs/icon.512.png"
+  }
+}
