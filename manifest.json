@@ -17,6 +17,11 @@
       "js": ["js/site_specific/news.ycombinator.com.js"]
     }
   ],
+  "background": {
+    "scripts": [
+      "js/background/autoReader.js"
+    ]
+  },
   "sidebar_action": {
     "default_title": "T1eB4n Bar",
     "default_panel": "html/sidebar.html",

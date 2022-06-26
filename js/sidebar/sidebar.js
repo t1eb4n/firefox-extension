@@ -71,6 +71,8 @@
       tabElement.querySelector('.tabTitle').innerText = tab.title;
       return;
     }
+
+    console.log(updateInfo);
   });
 
 })();
