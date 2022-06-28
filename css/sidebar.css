@@ -3,3 +3,12 @@ body {font-family: "ShareTech";}
 
 body {margin: 8px; background-color: #222831; color: #FFD369; font-size: 16px;}
 .sidebarSectionHeader {margin: 0 10px 0; padding: 0; font-size: 24px;}
+
+#refreshButton{
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  height: 64px;
+  width: 64px;
+  background-image: url('../imgs/refresh.png');
+}
