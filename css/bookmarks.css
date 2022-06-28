@@ -4,7 +4,7 @@
 #bookmarks .bookmark span {
   display: inline-block;
   height: 30px;
-  width: 300px;
+  width: 75%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

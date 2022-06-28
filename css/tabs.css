@@ -21,7 +21,7 @@
 
 #tabs .tab span.tabTitle {
   display: inline-block;
-  width: 300px;
+  width: 75%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
