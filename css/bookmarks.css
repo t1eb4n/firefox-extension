@@ -1,4 +1,4 @@
-#bookmarks {line-height: 24px; text-align: center;}
+#bookmarks {line-height: 24px; text-align: center; min-width: 360px;}
 #bookmarks .bookmark {height: 24px; margin-bottom: 5px;}
 #bookmarks .bookmark img.favicon {height: 24px; width: 24px; margin-right: 10px; float: left;}
 #bookmarks .bookmark span {
