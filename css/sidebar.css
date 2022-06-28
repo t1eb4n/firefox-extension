@@ -1,19 +1,5 @@
-body {margin: 8px;}
-.sideBarHeader {margin: 0 10px 0; padding: 0; font-size: 24px;}
+@font-face {font-family: "SyneMono"; src: url('../fonts/SyneMono-Regular.ttf');}
+body {font-family: "SyneMono";}
 
-#tabs {min-width: 350px;}
-
-#tabs .tab img {height: 16px; width: 16px;}
-#tabs .tab .tabFavIcon {margin-right: 10px;}
-#tabs .tab .closeIcon {float: right;}
-
-#tabs .tab .tabTitle {
-  display: inline-block;
-  min-width: 200px;
-  max-width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#tabs .tab.active {background: bisque;};
+body {margin: 8px; background-color: #222831; color: #EEEEEE;}
+.sidebarSectionHeader {margin: 0 10px 0; padding: 0; font-size: 24px;}

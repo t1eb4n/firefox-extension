@@ -3,9 +3,6 @@
   const windowInfo = await browser.windows.getCurrent({populate: true});
 
   const addTab = (tab) => {
-    // Tabs muted by default
-    if(!tab.muted) browser.tabs.update(tab.id, {muted: true});
-
     const tabDiv = document.createElement('div');
     document.getElementById('tabs').appendChild(tabDiv);
 
@@ -72,7 +69,7 @@
       return;
     }
 
-    console.log(updateInfo);
+    //console.log(updateInfo);
   });
 
 })();

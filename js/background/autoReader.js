@@ -11,7 +11,8 @@
 
   browser.tabs.onCreated.addListener((tab) => {
     tabInfo[tab.id] = {
-      autoReaderView: false,
+      /** true === disabled **/
+      autoReaderView: true,
       currentUrl: tab.url
     };
   });
@@ -23,7 +24,8 @@
 
     if(tabInfo[tabId].currentUrl !== tab.url && -1 === tab.url.indexOf('about:reader?url=')) {
       tabInfo[tabId].currentUrl = tab.url;
-      tabInfo[tabId].autoReaderView = false;
+      /** true === disabled */
+      tabInfo[tabId].autoReaderView = true;
     }
 
     if(undefined !== updateInfo.isArticle && true === updateInfo.isArticle && false === tabInfo[tabId].autoReaderView) {

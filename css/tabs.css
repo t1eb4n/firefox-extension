@@ -1,0 +1,29 @@
+#tabs {
+  min-width: 350px;
+}
+
+#tabs .tab {
+  height: 32px;
+}
+
+#tabs .tab img {
+  height: 16px;
+  width: 16px;
+}
+
+#tabs .tab img.closeIcon {
+  float: right;
+}
+
+#tabs .tab span.tabTitle {
+  display: inline-block;
+  height: 30px;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#tabs .tab.active {
+  background: #393E46;
+}
