@@ -7,10 +7,22 @@
       browser.tabs.update(tab[0].id, {url: bookmark.url});
     });
 
+    const url = new URL(bookmark.url);
+
+    const favicon = document.createElement('img');
+    favicon.className = 'favicon';
+    favicon.src = `${url.origin}/favicon.ico`;
+    favicon.onerror = () => {
+      favicon.onerror = null;
+
+      favicon.src = '../imgs/icon.512.png';
+    }
+
     const bookmarkTitle = document.createElement('span');
     bookmarkTitle.className = 'bookmarkTitle';
     bookmarkTitle.innerText = bookmark.title;
 
+    bookmarkDiv.appendChild(favicon);
     bookmarkDiv.appendChild(bookmarkTitle);
 
     return bookmarkDiv;
