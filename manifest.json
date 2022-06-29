@@ -58,5 +58,8 @@
     "default_title": "T1eB4n Bar",
     "default_panel": "html/sidebar.html",
     "default_icon": "imgs/icon.512.png"
-  }
+  },
+  "web_accessible_resources": [
+    "imgs/icon.512.png"
+  ]
 }
