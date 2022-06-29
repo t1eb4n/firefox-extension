@@ -3,32 +3,20 @@
   const windowInfo = await browser.windows.getCurrent({populate: true});
 
   const addTab = (tab) => {
-    const tabDiv = document.createElement('div');
+    const tabDiv = document.getElementById('tabTemplate').cloneNode(true);
+    tabDiv.id = '';
     document.getElementById('tabs').appendChild(tabDiv);
 
-    const favIcon = document.createElement('img');
-    favIcon.src = tab.favIconUrl || 'chrome://branding/content/icon32.png';
-    favIcon.className = 'tabFavIcon';
-
-    const title = document.createElement('span');
-    title.className = 'tabTitle';
-    title.innerText = tab.title;
-
-    const closeIcon = document.createElement('img');
-    closeIcon.src   = '../imgs/close.png';
-    closeIcon.className = 'closeIcon';
-    closeIcon.addEventListener('click', () => browser.tabs.remove(tab.id));
+    tabDiv.querySelector('img.tabFavIcon').src = tab.favIconUrl || 'chrome://branding/content/icon32.png';
+    tabDiv.querySelector('span.tabTitle').innerText = tab.title;
+    tabDiv.querySelector('img.tabCloseIcon').addEventListener('click', (event) => event.stopPropagation() || browser.tabs.remove(tab.id));
 
     tabDiv.dataset.tabId = tab.id;
-    tabDiv.className = 'tab';
     if(tab.active) {
       tabDiv.className += ' active';
     }
 
     tabDiv.addEventListener('click', () => browser.tabs.update(tab.id, {active: true}));
-    tabDiv.append(favIcon);
-    tabDiv.append(title);
-    tabDiv.append(closeIcon);
 
     tabDiv.removeElement = () => {
       tabDiv.remove();
@@ -38,7 +26,7 @@
     tabElements[tab.id] = tabDiv;
   };
 
-  /** Load tabs initally **/
+  /** Load tabs initially **/
   (await browser.tabs.query({windowId: windowInfo.id})).forEach(tab => addTab(tab));
 
   browser.tabs.onCreated.addListener((tab) => addTab(tab));
@@ -71,5 +59,4 @@
 
     //console.log(updateInfo);
   });
-
 })();

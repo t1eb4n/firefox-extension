@@ -1,3 +1,9 @@
+/**
+ * Notes:
+ * Turn off bookmark tool bar on new tab screen
+ * - Right click title bar > Bookmarks Toolbar > Never show
+ */
+
 (async function() {
   const buildBookmarkElement = (bookmark) => {
     const bookmarkDiv = document.createElement('div');

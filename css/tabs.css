@@ -15,7 +15,7 @@
   width: auto;
 }
 
-#tabs .tab img.closeIcon {
+#tabs .tab img.tabCloseIcon {
   float: right;
 }
 

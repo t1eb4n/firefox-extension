@@ -4,6 +4,8 @@ body {font-family: "ShareTech";}
 body {margin: 8px; background-color: #222831; color: #FFD369; font-size: 16px;}
 .sidebarSectionHeader {margin: 0 10px 0; padding: 0; font-size: 24px;}
 
+#templates {display: none;}
+
 #refreshButton{
   position: absolute;
   bottom: 5px;
