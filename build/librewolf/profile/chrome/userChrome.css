@@ -1,0 +1,9 @@
+/* hides the native tabs */
+#TabsToolbar {
+  visibility: collapse;
+}
+
+/* Sidebar header is annoying */
+#sidebar-header {
+  visibility: collapse !important;
+}

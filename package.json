@@ -1,0 +1,22 @@
+{
+  "name": "firefox-extension",
+  "version": "0.0.1",
+  "description": "T1eB4n's Firefox Extension",
+  "scripts": {
+    "dev": "web-ext run --firefox=/Applications/LibreWolf.app/Contents/MacOS/librewolf-bin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-t1eb4n:t1eb4n/firefox-extension.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Christian South",
+    "email": "t1eb4n@gmail.com",
+    "url": "https://github.com/t1eb4n"
+  },
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "web-ext": "^7.1.0"
+  }
+}
