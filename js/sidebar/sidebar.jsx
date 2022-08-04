@@ -8,15 +8,25 @@ class Sidebar extends React.Component {
     this.state = {
       tabs: [],
     };
+
   }
 
-  tabClick(tabId) {
-    browser.tabs.update(tabId, {active: true});
+  tabClick = (event) => {
+    const id = +event.target.parentElement.dataset.id;
+
+    if (!isNaN(id)) {
+      browser.tabs.update(id, {active: true});
+    }
   }
 
-  tabCloseClick(tabId, event) {
+  tabCloseClick = (event) => {
     event.stopPropagation();
-    browser.tabs.remove(tabId);
+
+    const id = +event.target.parentElement.dataset.id;
+
+    if (!isNaN(id)) {
+      browser.tabs.remove(id);
+    }
   }
 
   async componentDidMount() {
@@ -49,10 +59,10 @@ class Sidebar extends React.Component {
     return <div>
       <h2 id="tabsHeader" className="sidebarSectionHeader">Tabs</h2>
       <div id="tabs">{this.state.tabs.map(tab =>
-      <div key={tab.id} className={['tab', tab.active ? 'active' : ''].join(' ')} onClick={() => this.tabClick(tab.id)}>
+      <div key={tab.id} data-id={tab.id} className={['tab', tab.active ? 'active' : ''].join(' ')} onClick={this.tabClick}>
           <img className="tabFavIcon" src={tab.status === 'loading' ?  '../imgs/loading.gif' : (tab.favIconUrl || 'chrome://branding/content/icon32.png')} />
           <span className="tabTitle">{tab.status === 'loading' ? 'Loading...' : tab.title}</span>
-          <img className="tabCloseIcon" src="../imgs/close.png" onClick={e => this.tabCloseClick(tab.id, e)}/>
+          <img className="tabCloseIcon" src="../imgs/close.png" onClick={this.tabCloseClick}/>
         </div>
       )}</div>
 
