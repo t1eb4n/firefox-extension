@@ -1,9 +1,31 @@
-/* hides the native tabs */
-#TabsToolbar {
-  visibility: collapse;
+/* background color */
+#personal-bookmarks, #navigator-toolbox, #nav-bar, #PersonalToolbar {
+  background: #212121 !important;
+  color: #f7f6e7 !important;
 }
 
+/* Lock sidebar size */
+#sidebar {
+  min-width: 400px !important;
+  max-width: 400px !important;
+}
+
+#PersonalToolbar {
+  font-weight: bold;
+}
+
+/* Hide Tabs */
+#TabsToolbar-customization-target {display: none;}
+
 /* Sidebar header is annoying */
-#sidebar-header {
-  visibility: collapse !important;
+#sidebar-header {visibility: collapse !important;}
+
+/** Remove extra spacing around the URL Bar **/
+#customizableui-special-spring1,#customizableui-special-spring2 {display: none;}
+
+/** Resize title bar since we removed the tabs, and move the the nav bar into that now blank space */
+.titlebar-buttonbox-container {height: 40px;}
+#nav-bar {
+  margin-left: 70px;
+  margin-top: -40px;
 }

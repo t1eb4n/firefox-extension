@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="../css/sidebar.css" />
-    <link rel="stylesheet" href="../css/tabs.css" />
-    <link rel="stylesheet" href="../css/bookmarks.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="../externals/fontisto/fontisto.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="../css/sidebar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bookmarks.css" />
   </head>
 
   <body>
-    <h2 id="tabsHeader" class="sidebarSectionHeader">Tabs</h2>
-    <div id="tabs">
-      
-    </div>
+    <h2 id="tabsHeader" class="sidebarSectionHeader">
+      Tabs
+      <i class="fi fi-plus-a" id="addTab"></i>
+    </h2>
+    <div id="tabs"></div>
 
     <hr width="100" />
 
@@ -18,15 +23,18 @@
     <div id="bookmarks"></div>
 
     <div id="templates">
-      <div class="tab" id="tabTemplate">
+      <div class="tab lineItem" id="tabTemplate" draggable="true">
         <img class="tabFavIcon" src="../imgs/icon.512.png" />
-        <span class="tabTitle"></span>
-        <img class="tabCloseIcon" src="../imgs/close.png" />
+        <span class="tabTitle lineContent"></span>
+        <div class="tabIcons">
+          <i class="tabIdentity"></i>
+          <i class="fi fi-close-a tabCloseIcon"></i>
+        </div>
       </div>
     </div>
 
-    <script src="../js/sidebar/sidebar.js"></script>
-    <script src="../js/sidebar/tabs.js"></script>
-    <script src="../js/sidebar/bookmarks.js"></script>
+    <script type="text/javascript" src="../js/sidebar/sidebar.js"></script>
+    <script type="text/javascript" src="../js/sidebar/tabs.js"></script>
+    <script type="text/javascript" src="../js/sidebar/bookmarks.js"></script>
   </body>
 </html>

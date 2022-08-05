@@ -48,6 +48,7 @@
 
     "<all_urls>"
   ],
+  "background": {"scripts": ["js/background.js"]},
   "content_scripts": [
     {
       "matches": ["https://news.ycombinator.com/*"],
@@ -59,7 +60,26 @@
     "default_panel": "html/sidebar.html",
     "default_icon": "imgs/icon.512.png"
   },
+  "browser_action": {
+    "default_icon": {
+      "16": "imgs/icon.512.png",
+      "32": "imgs/icon.512.png"
+    }
+  },
+  "commands":{
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Command+Period"
+      }
+    }
+  },
   "web_accessible_resources": [
     "imgs/icon.512.png"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "91.1.0",
+      "id": "{8c24520a-2b6b-4c47-ba5f-59ba5e3542ad}"
+    }
+  }
 }
