@@ -59,20 +59,38 @@ ciContainer.addIdentity('t1eb4n-work-boomtown', 'purple', 'briefcase');
 
 /**
  * Private acts differently as it deletes cookies / local storage when no tabs are left.
- * 
- * Currently this deletes all private contexts cookies and local storage for every private context every time a tab gets
- * closed. Ideally, there would be a listener for each of the private contexts that gets attached / removed when they
- * are needed. This can happen in the future.
  */
-ciContainer.addIdentity('t1eb4n-private', 'red', 'fence', false, true);
-browser.tabs.onRemoved.addListener((tabId) => {
-  ciContainer.getPrivateContexts().forEach(async context => {
-    const tabs = await browser.tabs.query({cookieStoreId: context.cookieStoreId});
+const privateListeners = {};
 
-    if(tabs.length === 0) {
-      await browser.browsingData.remove({cookieStoreId: context.cookieStoreId}, {cookies: true, localStorage: true});
+browser.tabs.onUpdated.addListener((tabId, updateInfo, tab) => {
+  const currentContainer = ciContainer.getContextByCookieStoreID(tab.cookieStoreId);
+  const cookieStoreId    = currentContainer.cookieStoreId;
+
+  if(!currentContainer.isPrivate) {
+    return;
+  }
+
+  privateListeners[cookieStoreId]          ||= {};
+  privateListeners[cookieStoreId].tabs     ||= new Set();
+  privateListeners[cookieStoreId].listener ||= async (removedTabId) => {
+    if(privateListeners[cookieStoreId].tabs.has(removedTabId)) {
+      privateListeners[cookieStoreId].tabs.delete(removedTabId);
     }
-  });
+
+    if(privateListeners[cookieStoreId].tabs.size === 0) {
+      await browser.browsingData.remove({cookieStoreId}, {cookies: true, localStorage: true});
+      browser.tabs.onRemoved.removeListener(privateListeners[cookieStoreId].listener);
+      delete privateListeners[cookieStoreId];
+    }
+  }
+
+  privateListeners[cookieStoreId].tabs.add(tabId);
+
+  if(!browser.tabs.onRemoved.hasListener(privateListeners[cookieStoreId].listener)) {
+    browser.tabs.onRemoved.addListener(privateListeners[cookieStoreId].listener);
+  }
 });
+
+ciContainer.addIdentity('t1eb4n-private', 'red', 'fence', false, true);
 
 export default ciContainer;
