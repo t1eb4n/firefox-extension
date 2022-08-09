@@ -23121,10 +23121,6 @@
   (function() {
     const root = import_client.default.createRoot(document.body);
     root.render(/* @__PURE__ */ import_react6.default.createElement(Sidebar, null));
-    const refreshElement = document.createElement("div");
-    refreshElement.id = "refreshButton";
-    refreshElement.onclick = () => window.location.reload();
-    document.body.appendChild(refreshElement);
   })();
 })();
 /**
