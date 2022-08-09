@@ -23107,8 +23107,15 @@
 
   // js/sidebar.jsx
   var Sidebar = class extends import_react6.default.Component {
+    async refresh() {
+      await browser.runtime.reload();
+      window.location.reload();
+    }
     render() {
-      return /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement(TabContainer, null));
+      return /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement(TabContainer, null), /* @__PURE__ */ import_react6.default.createElement("div", {
+        id: "refreshButton",
+        onClick: this.refresh
+      }));
     }
   };
   (function() {
