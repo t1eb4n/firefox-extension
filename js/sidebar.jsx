@@ -1,23 +1,25 @@
-import React from "react";
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import TabContainer from "./sidebar/tab-container";
+import TabContainer from './sidebar/tab-container';
+import webext from './shim';
 
 class Sidebar extends React.Component {
   async refresh() {
-    await browser.runtime.reload();
+    await webext.runtime.reload();
     window.location.reload();
   }
 
   render() {
-    return <div>
+    return (
+      <div>
         <TabContainer />
         <div id="refreshButton" onClick={this.refresh} />
       </div>
-    ;
+    );
   }
 }
 
-(function() {
-  const root = ReactDOM.createRoot(document.body);
-  root.render(<Sidebar/>);
+(function () {
+  const root = ReactDOM.createRoot(document.getElementById('sidebar-container') || document.body);
+  root.render(<Sidebar />);
 })();

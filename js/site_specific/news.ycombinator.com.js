@@ -12,7 +12,7 @@
     const favicon   = document.createElement('img');
     favicon.style   = 'height: 16px; width: 16px; margin-right: 5px; float: left;';
     favicon.src     = `${url.origin}/favicon.ico`;
-    favicon.onerror = () => favicon.src = browser.runtime.getURL('imgs/icon.512.png');
+    favicon.onerror = () => favicon.src = webext.runtime.getURL('imgs/icon.512.png');
 
     elem.prepend(favicon);
   });

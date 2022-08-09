@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class TabFavIcon extends React.Component {
   static DEFAULT_FAVICON_URL = 'chrome://branding/content/icon32.png';

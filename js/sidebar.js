@@ -22966,15 +22966,19 @@
     }
   };
 
+  // js/shim.js
+  var webext = browser || chrome;
+  var shim_default = webext;
+
   // js/contextual-identities.js
   var ContextualIdentities = class {
     constructor() {
       this.identities = {};
     }
     async addIdentity(name, color, icon, isDefault = false, isPrivate = false) {
-      let identity = await browser.contextualIdentities.query({ name });
+      let identity = await shim_default.contextualIdentities.query({ name });
       if (identity.length === 0) {
-        identity = await browser.contextualIdentities.create({ name, color, icon });
+        identity = await shim_default.contextualIdentities.create({ name, color, icon });
       }
       identity[0].isDefault = isDefault;
       identity[0].isPrivate = isPrivate;
@@ -22992,24 +22996,24 @@
   };
   var ciContainer = new ContextualIdentities();
   ciContainer.addIdentity("t1eb4n-personal", "yellow", "fingerprint", true);
-  browser.tabs.onUpdated.addListener(async (tabId, updateInfo, tab) => {
+  shim_default.tabs.onUpdated.addListener(async (tabId, updateInfo, tab) => {
     const defaultCookieId = ciContainer.getDefaultContext().cookieStoreId;
     const currentContainer = ciContainer.getContextByCookieStoreID(tab.cookieStoreId);
     if (currentContainer === void 0 && updateInfo.url !== void 0 && updateInfo.url.indexOf("about:") !== 0) {
       try {
-        await browser.tabs.create({
+        await shim_default.tabs.create({
           cookieStoreId: defaultCookieId,
           url: updateInfo.url,
           index: tab.index
         });
-        await browser.tabs.remove(tabId);
+        await shim_default.tabs.remove(tabId);
       } catch {
       }
     }
   });
   ciContainer.addIdentity("t1eb4n-work-boomtown", "purple", "briefcase");
   var privateListeners = {};
-  browser.tabs.onUpdated.addListener((tabId, updateInfo, tab) => {
+  shim_default.tabs.onUpdated.addListener((tabId, updateInfo, tab) => {
     const currentContainer = ciContainer.getContextByCookieStoreID(tab.cookieStoreId);
     const cookieStoreId = currentContainer.cookieStoreId;
     if (!currentContainer.isPrivate) {
@@ -23022,14 +23026,14 @@
         privateListeners[cookieStoreId].tabs.delete(removedTabId);
       }
       if (privateListeners[cookieStoreId].tabs.size === 0) {
-        await browser.browsingData.remove({ cookieStoreId }, { cookies: true, localStorage: true });
-        browser.tabs.onRemoved.removeListener(privateListeners[cookieStoreId].listener);
+        await shim_default.browsingData.remove({ cookieStoreId }, { cookies: true, localStorage: true });
+        shim_default.tabs.onRemoved.removeListener(privateListeners[cookieStoreId].listener);
         delete privateListeners[cookieStoreId];
       }
     };
     privateListeners[cookieStoreId].tabs.add(tabId);
-    if (!browser.tabs.onRemoved.hasListener(privateListeners[cookieStoreId].listener)) {
-      browser.tabs.onRemoved.addListener(privateListeners[cookieStoreId].listener);
+    if (!shim_default.tabs.onRemoved.hasListener(privateListeners[cookieStoreId].listener)) {
+      shim_default.tabs.onRemoved.addListener(privateListeners[cookieStoreId].listener);
     }
   });
   ciContainer.addIdentity("t1eb4n-private", "red", "fence", false, true);
@@ -23038,11 +23042,11 @@
   // js/sidebar/tab.jsx
   var Tab = class extends import_react4.default.Component {
     onClick = async () => {
-      await browser.tabs.update(this.props.tab.id, { active: true });
+      await shim_default.tabs.update(this.props.tab.id, { active: true });
     };
     onClickClose = async (event) => {
       event.stopPropagation();
-      await browser.tabs.remove(this.props.tab.id);
+      await shim_default.tabs.remove(this.props.tab.id);
     };
     render() {
       const tab = this.props.tab;
@@ -23073,20 +23077,20 @@
     }
     async componentDidMount() {
       const deletedTabs = [];
-      const windowInfo = await browser.windows.getCurrent({ populate: true });
+      const windowInfo = await shim_default.windows.getCurrent({ populate: true });
       const loadTabInfo = async () => {
-        const tabs = await browser.tabs.query({ windowId: windowInfo.id });
+        const tabs = await shim_default.tabs.query({ windowId: windowInfo.id });
         this.setState({ tabs: tabs.filter((tab) => !deletedTabs.includes(tab.id)) });
       };
       await loadTabInfo();
-      browser.tabs.onRemoved.addListener((tabId) => {
+      shim_default.tabs.onRemoved.addListener((tabId) => {
         deletedTabs.push(tabId);
         loadTabInfo();
       });
-      browser.tabs.onCreated.addListener(loadTabInfo);
-      browser.tabs.onDetached.addListener(loadTabInfo);
-      browser.tabs.onActivated.addListener(loadTabInfo);
-      browser.tabs.onUpdated.addListener(loadTabInfo);
+      shim_default.tabs.onCreated.addListener(loadTabInfo);
+      shim_default.tabs.onDetached.addListener(loadTabInfo);
+      shim_default.tabs.onActivated.addListener(loadTabInfo);
+      shim_default.tabs.onUpdated.addListener(loadTabInfo);
     }
     render() {
       return /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", {
@@ -23095,7 +23099,7 @@
       }, "Tabs", /* @__PURE__ */ import_react5.default.createElement("i", {
         id: "addTab",
         className: "fi fi-plus-a",
-        onClick: () => browser.tabs.create({ cookieStoreId: contextual_identities_default.getDefaultContext().cookieStoreId })
+        onClick: () => shim_default.tabs.create({ cookieStoreId: contextual_identities_default.getDefaultContext().cookieStoreId })
       })), /* @__PURE__ */ import_react5.default.createElement("div", {
         id: "tabs"
       }, this.state.tabs.map((tab) => /* @__PURE__ */ import_react5.default.createElement(Tab, {
@@ -23108,7 +23112,7 @@
   // js/sidebar.jsx
   var Sidebar = class extends import_react6.default.Component {
     async refresh() {
-      await browser.runtime.reload();
+      await shim_default.runtime.reload();
       window.location.reload();
     }
     render() {
@@ -23119,7 +23123,7 @@
     }
   };
   (function() {
-    const root = import_client.default.createRoot(document.body);
+    const root = import_client.default.createRoot(document.getElementById("sidebar-container") || document.body);
     root.render(/* @__PURE__ */ import_react6.default.createElement(Sidebar, null));
   })();
 })();

@@ -1,6 +1,7 @@
-import React from "react";
-import Tab from "./tab";
-import ciContainer from "../contextual-identities";
+import React from 'react';
+import Tab from './tab';
+import ciContainer from '../contextual-identities';
+import webext from '../shim';
 
 export default class TabContainer extends React.Component {
   constructor(props) {
@@ -13,16 +14,16 @@ export default class TabContainer extends React.Component {
 
   async componentDidMount() {
     const deletedTabs = [];
-    const windowInfo = await browser.windows.getCurrent({populate: true});
+    const windowInfo = await webext.windows.getCurrent({populate: true});
     const loadTabInfo = async () => {
-      const tabs = await browser.tabs.query({windowId: windowInfo.id})
+      const tabs = await webext.tabs.query({windowId: windowInfo.id})
       this.setState({ tabs: tabs.filter(tab => !deletedTabs.includes(tab.id)) });
     };
 
     /** Load tabs initially **/
     await loadTabInfo();
 
-    browser.tabs.onRemoved.addListener(tabId => {
+    webext.tabs.onRemoved.addListener(tabId => {
       // Sadly, onActivated/onUpdate will be called right after this,
       // and loadTabInfo will (even async!) will include the tab that's being removed right now (?!!?!?)
       // So we have to track that ID separately so loadTabInfo knows what to exclude.
@@ -31,17 +32,17 @@ export default class TabContainer extends React.Component {
       loadTabInfo();
     });
 
-    browser.tabs.onCreated.addListener(loadTabInfo);
-    browser.tabs.onDetached.addListener(loadTabInfo);
-    browser.tabs.onActivated.addListener(loadTabInfo);
-    browser.tabs.onUpdated.addListener(loadTabInfo);
+    webext.tabs.onCreated.addListener(loadTabInfo);
+    webext.tabs.onDetached.addListener(loadTabInfo);
+    webext.tabs.onActivated.addListener(loadTabInfo);
+    webext.tabs.onUpdated.addListener(loadTabInfo);
   }
 
   render() {
     return <div>
       <h2 id="tabsHeader" className="sidebarSectionHeader">
         Tabs
-        <i id="addTab" className="fi fi-plus-a" onClick={() => browser.tabs.create({cookieStoreId: ciContainer.getDefaultContext().cookieStoreId})} />
+        <i id="addTab" className="fi fi-plus-a" onClick={() => webext.tabs.create({cookieStoreId: ciContainer.getDefaultContext().cookieStoreId})} />
       </h2>
       <div id="tabs">
         {this.state.tabs.map(tab => <Tab key={tab.id} tab={tab} />)}

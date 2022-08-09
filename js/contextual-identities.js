@@ -1,13 +1,15 @@
+import webext from './shim';
+
 class ContextualIdentities {
   constructor() {
     this.identities = {};
   }
 
   async addIdentity(name, color, icon, isDefault = false, isPrivate = false) {
-    let identity = await browser.contextualIdentities.query({name});
+    let identity = await webext.contextualIdentities.query({name});
 
     if(identity.length === 0) {
-      identity = await browser.contextualIdentities.create({name, color, icon});
+      identity = await webext.contextualIdentities.create({name, color, icon});
     }
 
     identity[0].isDefault = isDefault;
@@ -38,18 +40,18 @@ const ciContainer = new ContextualIdentities();
  * Any tab without a context, that isn't private automatically becomes a personal tab
  */
 ciContainer.addIdentity('t1eb4n-personal', 'yellow', 'fingerprint', true);
-browser.tabs.onUpdated.addListener(async (tabId, updateInfo, tab) => {
+webext.tabs.onUpdated.addListener(async (tabId, updateInfo, tab) => {
   const defaultCookieId = ciContainer.getDefaultContext().cookieStoreId;
   const currentContainer = ciContainer.getContextByCookieStoreID(tab.cookieStoreId);
 
   if(currentContainer === undefined && updateInfo.url !== undefined && updateInfo.url.indexOf('about:') !== 0) {
     try {
-      await browser.tabs.create({
+      await webext.tabs.create({
         cookieStoreId: defaultCookieId,
         url: updateInfo.url,
         index: tab.index
       });
-      await browser.tabs.remove(tabId);
+      await webext.tabs.remove(tabId);
     } catch {}
   }
 });
@@ -62,7 +64,7 @@ ciContainer.addIdentity('t1eb4n-work-boomtown', 'purple', 'briefcase');
  */
 const privateListeners = {};
 
-browser.tabs.onUpdated.addListener((tabId, updateInfo, tab) => {
+webext.tabs.onUpdated.addListener((tabId, updateInfo, tab) => {
   const currentContainer = ciContainer.getContextByCookieStoreID(tab.cookieStoreId);
   const cookieStoreId    = currentContainer.cookieStoreId;
 
@@ -78,16 +80,16 @@ browser.tabs.onUpdated.addListener((tabId, updateInfo, tab) => {
     }
 
     if(privateListeners[cookieStoreId].tabs.size === 0) {
-      await browser.browsingData.remove({cookieStoreId}, {cookies: true, localStorage: true});
-      browser.tabs.onRemoved.removeListener(privateListeners[cookieStoreId].listener);
+      await webext.browsingData.remove({cookieStoreId}, {cookies: true, localStorage: true});
+      webext.tabs.onRemoved.removeListener(privateListeners[cookieStoreId].listener);
       delete privateListeners[cookieStoreId];
     }
   }
 
   privateListeners[cookieStoreId].tabs.add(tabId);
 
-  if(!browser.tabs.onRemoved.hasListener(privateListeners[cookieStoreId].listener)) {
-    browser.tabs.onRemoved.addListener(privateListeners[cookieStoreId].listener);
+  if(!webext.tabs.onRemoved.hasListener(privateListeners[cookieStoreId].listener)) {
+    webext.tabs.onRemoved.addListener(privateListeners[cookieStoreId].listener);
   }
 });
 
