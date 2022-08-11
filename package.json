@@ -22,6 +22,8 @@
     "nodemon": "^2.0.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-sortablejs": "^6.1.4",
+    "sortablejs": "^1.15.0",
     "web-ext": "^7.1.0"
   }
 }

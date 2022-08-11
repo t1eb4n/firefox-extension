@@ -1,4 +1,5 @@
 import webext from './shim';
+import TabManager from './tab-manager';
 
 class ContextualIdentities {
   constructor() {

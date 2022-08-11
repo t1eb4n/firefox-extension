@@ -7,6 +7,7 @@ import webext from '../shim';
 
 export default class Tab extends React.Component {
   onClick = async () => {
+    if(this.props.tab.active) return;
     await webext.tabs.update(this.props.tab.id, {active: true});
   }
 

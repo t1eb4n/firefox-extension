@@ -416,7 +416,7 @@
               }
             }
           }
-          var ReactElement = function(type, key, ref, self, source, owner, props) {
+          var ReactElement = function(type, key, ref, self2, source, owner, props) {
             var element = {
               $$typeof: REACT_ELEMENT_TYPE,
               type,
@@ -437,7 +437,7 @@
                 configurable: false,
                 enumerable: false,
                 writable: false,
-                value: self
+                value: self2
               });
               Object.defineProperty(element, "_source", {
                 configurable: false,
@@ -457,7 +457,7 @@
             var props = {};
             var key = null;
             var ref = null;
-            var self = null;
+            var self2 = null;
             var source = null;
             if (config != null) {
               if (hasValidRef(config)) {
@@ -472,7 +472,7 @@
                 }
                 key = "" + config.key;
               }
-              self = config.__self === void 0 ? null : config.__self;
+              self2 = config.__self === void 0 ? null : config.__self;
               source = config.__source === void 0 ? null : config.__source;
               for (propName in config) {
                 if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
@@ -514,7 +514,7 @@
                 }
               }
             }
-            return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+            return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
           }
           function cloneAndReplaceKey(oldElement, newKey) {
             var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
@@ -528,7 +528,7 @@
             var props = assign({}, element.props);
             var key = element.key;
             var ref = element.ref;
-            var self = element._self;
+            var self2 = element._self;
             var source = element._source;
             var owner = element._owner;
             if (config != null) {
@@ -566,7 +566,7 @@
               }
               props.children = childArray;
             }
-            return ReactElement(element.type, key, ref, self, source, owner, props);
+            return ReactElement(element.type, key, ref, self2, source, owner, props);
           }
           function isValidElement(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
@@ -22901,12 +22901,1446 @@
     }
   });
 
+  // node_modules/sortablejs/Sortable.min.js
+  var require_Sortable_min = __commonJS({
+    "node_modules/sortablejs/Sortable.min.js"(exports, module) {
+      !function(t, e) {
+        "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = t || self).Sortable = e();
+      }(exports, function() {
+        "use strict";
+        function e(e2, t2) {
+          var n2, o2 = Object.keys(e2);
+          return Object.getOwnPropertySymbols && (n2 = Object.getOwnPropertySymbols(e2), t2 && (n2 = n2.filter(function(t3) {
+            return Object.getOwnPropertyDescriptor(e2, t3).enumerable;
+          })), o2.push.apply(o2, n2)), o2;
+        }
+        function M(o2) {
+          for (var t2 = 1; t2 < arguments.length; t2++) {
+            var i2 = null != arguments[t2] ? arguments[t2] : {};
+            t2 % 2 ? e(Object(i2), true).forEach(function(t3) {
+              var e2, n2;
+              e2 = o2, t3 = i2[n2 = t3], n2 in e2 ? Object.defineProperty(e2, n2, { value: t3, enumerable: true, configurable: true, writable: true }) : e2[n2] = t3;
+            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(o2, Object.getOwnPropertyDescriptors(i2)) : e(Object(i2)).forEach(function(t3) {
+              Object.defineProperty(o2, t3, Object.getOwnPropertyDescriptor(i2, t3));
+            });
+          }
+          return o2;
+        }
+        function o(t2) {
+          return (o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t3) {
+            return typeof t3;
+          } : function(t3) {
+            return t3 && "function" == typeof Symbol && t3.constructor === Symbol && t3 !== Symbol.prototype ? "symbol" : typeof t3;
+          })(t2);
+        }
+        function a() {
+          return (a = Object.assign || function(t2) {
+            for (var e2 = 1; e2 < arguments.length; e2++) {
+              var n2, o2 = arguments[e2];
+              for (n2 in o2)
+                Object.prototype.hasOwnProperty.call(o2, n2) && (t2[n2] = o2[n2]);
+            }
+            return t2;
+          }).apply(this, arguments);
+        }
+        function i(t2, e2) {
+          if (null == t2)
+            return {};
+          var n2, o2 = function(t3, e3) {
+            if (null == t3)
+              return {};
+            for (var n3, o3 = {}, i3 = Object.keys(t3), r3 = 0; r3 < i3.length; r3++)
+              n3 = i3[r3], 0 <= e3.indexOf(n3) || (o3[n3] = t3[n3]);
+            return o3;
+          }(t2, e2);
+          if (Object.getOwnPropertySymbols)
+            for (var i2 = Object.getOwnPropertySymbols(t2), r2 = 0; r2 < i2.length; r2++)
+              n2 = i2[r2], 0 <= e2.indexOf(n2) || Object.prototype.propertyIsEnumerable.call(t2, n2) && (o2[n2] = t2[n2]);
+          return o2;
+        }
+        function r(t2) {
+          return function(t3) {
+            if (Array.isArray(t3))
+              return l(t3);
+          }(t2) || function(t3) {
+            if ("undefined" != typeof Symbol && null != t3[Symbol.iterator] || null != t3["@@iterator"])
+              return Array.from(t3);
+          }(t2) || function(t3, e2) {
+            if (t3) {
+              if ("string" == typeof t3)
+                return l(t3, e2);
+              var n2 = Object.prototype.toString.call(t3).slice(8, -1);
+              return "Map" === (n2 = "Object" === n2 && t3.constructor ? t3.constructor.name : n2) || "Set" === n2 ? Array.from(t3) : "Arguments" === n2 || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2) ? l(t3, e2) : void 0;
+            }
+          }(t2) || function() {
+            throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+          }();
+        }
+        function l(t2, e2) {
+          (null == e2 || e2 > t2.length) && (e2 = t2.length);
+          for (var n2 = 0, o2 = new Array(e2); n2 < e2; n2++)
+            o2[n2] = t2[n2];
+          return o2;
+        }
+        function t(t2) {
+          if ("undefined" != typeof window && window.navigator)
+            return !!navigator.userAgent.match(t2);
+        }
+        var y = t(/(?:Trident.*rv[ :]?11\.|msie|iemobile|Windows Phone)/i), w = t(/Edge/i), s = t(/firefox/i), u = t(/safari/i) && !t(/chrome/i) && !t(/android/i), n = t(/iP(ad|od|hone)/i), c = t(/chrome/i) && t(/android/i), d = { capture: false, passive: false };
+        function h(t2, e2, n2) {
+          t2.addEventListener(e2, n2, !y && d);
+        }
+        function f(t2, e2, n2) {
+          t2.removeEventListener(e2, n2, !y && d);
+        }
+        function p(t2, e2) {
+          if (e2 && (">" === e2[0] && (e2 = e2.substring(1)), t2))
+            try {
+              if (t2.matches)
+                return t2.matches(e2);
+              if (t2.msMatchesSelector)
+                return t2.msMatchesSelector(e2);
+              if (t2.webkitMatchesSelector)
+                return t2.webkitMatchesSelector(e2);
+            } catch (t3) {
+              return;
+            }
+        }
+        function N(t2, e2, n2, o2) {
+          if (t2) {
+            n2 = n2 || document;
+            do {
+              if (null != e2 && (">" !== e2[0] || t2.parentNode === n2) && p(t2, e2) || o2 && t2 === n2)
+                return t2;
+            } while (t2 !== n2 && (t2 = (i2 = t2).host && i2 !== document && i2.host.nodeType ? i2.host : i2.parentNode));
+          }
+          var i2;
+          return null;
+        }
+        var g, m = /\s+/g;
+        function I(t2, e2, n2) {
+          var o2;
+          t2 && e2 && (t2.classList ? t2.classList[n2 ? "add" : "remove"](e2) : (o2 = (" " + t2.className + " ").replace(m, " ").replace(" " + e2 + " ", " "), t2.className = (o2 + (n2 ? " " + e2 : "")).replace(m, " ")));
+        }
+        function P(t2, e2, n2) {
+          var o2 = t2 && t2.style;
+          if (o2) {
+            if (void 0 === n2)
+              return document.defaultView && document.defaultView.getComputedStyle ? n2 = document.defaultView.getComputedStyle(t2, "") : t2.currentStyle && (n2 = t2.currentStyle), void 0 === e2 ? n2 : n2[e2];
+            o2[e2 = !(e2 in o2 || -1 !== e2.indexOf("webkit")) ? "-webkit-" + e2 : e2] = n2 + ("string" == typeof n2 ? "" : "px");
+          }
+        }
+        function v(t2, e2) {
+          var n2 = "";
+          if ("string" == typeof t2)
+            n2 = t2;
+          else
+            do {
+              var o2 = P(t2, "transform");
+            } while (o2 && "none" !== o2 && (n2 = o2 + " " + n2), !e2 && (t2 = t2.parentNode));
+          var i2 = window.DOMMatrix || window.WebKitCSSMatrix || window.CSSMatrix || window.MSCSSMatrix;
+          return i2 && new i2(n2);
+        }
+        function b(t2, e2, n2) {
+          if (t2) {
+            var o2 = t2.getElementsByTagName(e2), i2 = 0, r2 = o2.length;
+            if (n2)
+              for (; i2 < r2; i2++)
+                n2(o2[i2], i2);
+            return o2;
+          }
+          return [];
+        }
+        function O() {
+          var t2 = document.scrollingElement;
+          return t2 || document.documentElement;
+        }
+        function k(t2, e2, n2, o2, i2) {
+          if (t2.getBoundingClientRect || t2 === window) {
+            var r2, a2, l2, s2, c2, u2, d2 = t2 !== window && t2.parentNode && t2 !== O() ? (a2 = (r2 = t2.getBoundingClientRect()).top, l2 = r2.left, s2 = r2.bottom, c2 = r2.right, u2 = r2.height, r2.width) : (l2 = a2 = 0, s2 = window.innerHeight, c2 = window.innerWidth, u2 = window.innerHeight, window.innerWidth);
+            if ((e2 || n2) && t2 !== window && (i2 = i2 || t2.parentNode, !y))
+              do {
+                if (i2 && i2.getBoundingClientRect && ("none" !== P(i2, "transform") || n2 && "static" !== P(i2, "position"))) {
+                  var h2 = i2.getBoundingClientRect();
+                  a2 -= h2.top + parseInt(P(i2, "border-top-width")), l2 -= h2.left + parseInt(P(i2, "border-left-width")), s2 = a2 + r2.height, c2 = l2 + r2.width;
+                  break;
+                }
+              } while (i2 = i2.parentNode);
+            return o2 && t2 !== window && (o2 = (e2 = v(i2 || t2)) && e2.a, t2 = e2 && e2.d, e2 && (s2 = (a2 /= t2) + (u2 /= t2), c2 = (l2 /= o2) + (d2 /= o2))), { top: a2, left: l2, bottom: s2, right: c2, width: d2, height: u2 };
+          }
+        }
+        function R(t2, e2, n2) {
+          for (var o2 = A(t2, true), i2 = k(t2)[e2]; o2; ) {
+            var r2 = k(o2)[n2];
+            if (!("top" === n2 || "left" === n2 ? r2 <= i2 : i2 <= r2))
+              return o2;
+            if (o2 === O())
+              break;
+            o2 = A(o2, false);
+          }
+          return false;
+        }
+        function X(t2, e2, n2, o2) {
+          for (var i2 = 0, r2 = 0, a2 = t2.children; r2 < a2.length; ) {
+            if ("none" !== a2[r2].style.display && a2[r2] !== Bt.ghost && (o2 || a2[r2] !== Bt.dragged) && N(a2[r2], n2.draggable, t2, false)) {
+              if (i2 === e2)
+                return a2[r2];
+              i2++;
+            }
+            r2++;
+          }
+          return null;
+        }
+        function Y(t2, e2) {
+          for (var n2 = t2.lastElementChild; n2 && (n2 === Bt.ghost || "none" === P(n2, "display") || e2 && !p(n2, e2)); )
+            n2 = n2.previousElementSibling;
+          return n2 || null;
+        }
+        function B(t2, e2) {
+          var n2 = 0;
+          if (!t2 || !t2.parentNode)
+            return -1;
+          for (; t2 = t2.previousElementSibling; )
+            "TEMPLATE" === t2.nodeName.toUpperCase() || t2 === Bt.clone || e2 && !p(t2, e2) || n2++;
+          return n2;
+        }
+        function E(t2) {
+          var e2 = 0, n2 = 0, o2 = O();
+          if (t2)
+            do {
+              var i2 = v(t2), r2 = i2.a, i2 = i2.d;
+            } while (e2 += t2.scrollLeft * r2, n2 += t2.scrollTop * i2, t2 !== o2 && (t2 = t2.parentNode));
+          return [e2, n2];
+        }
+        function A(t2, e2) {
+          if (!t2 || !t2.getBoundingClientRect)
+            return O();
+          var n2 = t2, o2 = false;
+          do {
+            if (n2.clientWidth < n2.scrollWidth || n2.clientHeight < n2.scrollHeight) {
+              var i2 = P(n2);
+              if (n2.clientWidth < n2.scrollWidth && ("auto" == i2.overflowX || "scroll" == i2.overflowX) || n2.clientHeight < n2.scrollHeight && ("auto" == i2.overflowY || "scroll" == i2.overflowY)) {
+                if (!n2.getBoundingClientRect || n2 === document.body)
+                  return O();
+                if (o2 || e2)
+                  return n2;
+                o2 = true;
+              }
+            }
+          } while (n2 = n2.parentNode);
+          return O();
+        }
+        function D(t2, e2) {
+          return Math.round(t2.top) === Math.round(e2.top) && Math.round(t2.left) === Math.round(e2.left) && Math.round(t2.height) === Math.round(e2.height) && Math.round(t2.width) === Math.round(e2.width);
+        }
+        function S(e2, n2) {
+          return function() {
+            var t2;
+            g || (1 === (t2 = arguments).length ? e2.call(this, t2[0]) : e2.apply(this, t2), g = setTimeout(function() {
+              g = void 0;
+            }, n2));
+          };
+        }
+        function F(t2, e2, n2) {
+          t2.scrollLeft += e2, t2.scrollTop += n2;
+        }
+        function _(t2) {
+          var e2 = window.Polymer, n2 = window.jQuery || window.Zepto;
+          return e2 && e2.dom ? e2.dom(t2).cloneNode(true) : n2 ? n2(t2).clone(true)[0] : t2.cloneNode(true);
+        }
+        function C(t2, e2) {
+          P(t2, "position", "absolute"), P(t2, "top", e2.top), P(t2, "left", e2.left), P(t2, "width", e2.width), P(t2, "height", e2.height);
+        }
+        function T(t2) {
+          P(t2, "position", ""), P(t2, "top", ""), P(t2, "left", ""), P(t2, "width", ""), P(t2, "height", "");
+        }
+        var j = "Sortable" + new Date().getTime();
+        function x() {
+          var e2, o2 = [];
+          return { captureAnimationState: function() {
+            o2 = [], this.options.animation && [].slice.call(this.el.children).forEach(function(t2) {
+              var e3, n2;
+              "none" !== P(t2, "display") && t2 !== Bt.ghost && (o2.push({ target: t2, rect: k(t2) }), e3 = M({}, o2[o2.length - 1].rect), !t2.thisAnimationDuration || (n2 = v(t2, true)) && (e3.top -= n2.f, e3.left -= n2.e), t2.fromRect = e3);
+            });
+          }, addAnimationState: function(t2) {
+            o2.push(t2);
+          }, removeAnimationState: function(t2) {
+            o2.splice(function(t3, e3) {
+              for (var n2 in t3)
+                if (t3.hasOwnProperty(n2)) {
+                  for (var o3 in e3)
+                    if (e3.hasOwnProperty(o3) && e3[o3] === t3[n2][o3])
+                      return Number(n2);
+                }
+              return -1;
+            }(o2, { target: t2 }), 1);
+          }, animateAll: function(t2) {
+            var c2 = this;
+            if (!this.options.animation)
+              return clearTimeout(e2), void ("function" == typeof t2 && t2());
+            var u2 = false, d2 = 0;
+            o2.forEach(function(t3) {
+              var e3 = 0, n2 = t3.target, o3 = n2.fromRect, i2 = k(n2), r2 = n2.prevFromRect, a2 = n2.prevToRect, l2 = t3.rect, s2 = v(n2, true);
+              s2 && (i2.top -= s2.f, i2.left -= s2.e), n2.toRect = i2, n2.thisAnimationDuration && D(r2, i2) && !D(o3, i2) && (l2.top - i2.top) / (l2.left - i2.left) == (o3.top - i2.top) / (o3.left - i2.left) && (t3 = l2, s2 = r2, r2 = a2, a2 = c2.options, e3 = Math.sqrt(Math.pow(s2.top - t3.top, 2) + Math.pow(s2.left - t3.left, 2)) / Math.sqrt(Math.pow(s2.top - r2.top, 2) + Math.pow(s2.left - r2.left, 2)) * a2.animation), D(i2, o3) || (n2.prevFromRect = o3, n2.prevToRect = i2, e3 = e3 || c2.options.animation, c2.animate(n2, l2, i2, e3)), e3 && (u2 = true, d2 = Math.max(d2, e3), clearTimeout(n2.animationResetTimer), n2.animationResetTimer = setTimeout(function() {
+                n2.animationTime = 0, n2.prevFromRect = null, n2.fromRect = null, n2.prevToRect = null, n2.thisAnimationDuration = null;
+              }, e3), n2.thisAnimationDuration = e3);
+            }), clearTimeout(e2), u2 ? e2 = setTimeout(function() {
+              "function" == typeof t2 && t2();
+            }, d2) : "function" == typeof t2 && t2(), o2 = [];
+          }, animate: function(t2, e3, n2, o3) {
+            var i2, r2;
+            o3 && (P(t2, "transition", ""), P(t2, "transform", ""), i2 = (r2 = v(this.el)) && r2.a, r2 = r2 && r2.d, i2 = (e3.left - n2.left) / (i2 || 1), r2 = (e3.top - n2.top) / (r2 || 1), t2.animatingX = !!i2, t2.animatingY = !!r2, P(t2, "transform", "translate3d(" + i2 + "px," + r2 + "px,0)"), this.forRepaintDummy = t2.offsetWidth, P(t2, "transition", "transform " + o3 + "ms" + (this.options.easing ? " " + this.options.easing : "")), P(t2, "transform", "translate3d(0,0,0)"), "number" == typeof t2.animated && clearTimeout(t2.animated), t2.animated = setTimeout(function() {
+              P(t2, "transition", ""), P(t2, "transform", ""), t2.animated = false, t2.animatingX = false, t2.animatingY = false;
+            }, o3));
+          } };
+        }
+        var H = [], L = { initializeByDefault: true }, K = { mount: function(e2) {
+          for (var t2 in L)
+            !L.hasOwnProperty(t2) || t2 in e2 || (e2[t2] = L[t2]);
+          H.forEach(function(t3) {
+            if (t3.pluginName === e2.pluginName)
+              throw "Sortable: Cannot mount plugin ".concat(e2.pluginName, " more than once");
+          }), H.push(e2);
+        }, pluginEvent: function(e2, n2, o2) {
+          var t2 = this;
+          this.eventCanceled = false, o2.cancel = function() {
+            t2.eventCanceled = true;
+          };
+          var i2 = e2 + "Global";
+          H.forEach(function(t3) {
+            n2[t3.pluginName] && (n2[t3.pluginName][i2] && n2[t3.pluginName][i2](M({ sortable: n2 }, o2)), n2.options[t3.pluginName] && n2[t3.pluginName][e2] && n2[t3.pluginName][e2](M({ sortable: n2 }, o2)));
+          });
+        }, initializePlugins: function(n2, o2, i2, t2) {
+          for (var e2 in H.forEach(function(t3) {
+            var e3 = t3.pluginName;
+            (n2.options[e3] || t3.initializeByDefault) && ((t3 = new t3(n2, o2, n2.options)).sortable = n2, t3.options = n2.options, n2[e3] = t3, a(i2, t3.defaults));
+          }), n2.options) {
+            var r2;
+            n2.options.hasOwnProperty(e2) && (void 0 !== (r2 = this.modifyOption(n2, e2, n2.options[e2])) && (n2.options[e2] = r2));
+          }
+        }, getEventProperties: function(e2, n2) {
+          var o2 = {};
+          return H.forEach(function(t2) {
+            "function" == typeof t2.eventProperties && a(o2, t2.eventProperties.call(n2[t2.pluginName], e2));
+          }), o2;
+        }, modifyOption: function(e2, n2, o2) {
+          var i2;
+          return H.forEach(function(t2) {
+            e2[t2.pluginName] && t2.optionListeners && "function" == typeof t2.optionListeners[n2] && (i2 = t2.optionListeners[n2].call(e2[t2.pluginName], o2));
+          }), i2;
+        } };
+        function W(t2) {
+          var e2 = t2.sortable, n2 = t2.rootEl, o2 = t2.name, i2 = t2.targetEl, r2 = t2.cloneEl, a2 = t2.toEl, l2 = t2.fromEl, s2 = t2.oldIndex, c2 = t2.newIndex, u2 = t2.oldDraggableIndex, d2 = t2.newDraggableIndex, h2 = t2.originalEvent, f2 = t2.putSortable, p2 = t2.extraEventProperties;
+          if (e2 = e2 || n2 && n2[j]) {
+            var g2, m2 = e2.options, t2 = "on" + o2.charAt(0).toUpperCase() + o2.substr(1);
+            !window.CustomEvent || y || w ? (g2 = document.createEvent("Event")).initEvent(o2, true, true) : g2 = new CustomEvent(o2, { bubbles: true, cancelable: true }), g2.to = a2 || n2, g2.from = l2 || n2, g2.item = i2 || n2, g2.clone = r2, g2.oldIndex = s2, g2.newIndex = c2, g2.oldDraggableIndex = u2, g2.newDraggableIndex = d2, g2.originalEvent = h2, g2.pullMode = f2 ? f2.lastPutMode : void 0;
+            var v2, b2 = M(M({}, p2), K.getEventProperties(o2, e2));
+            for (v2 in b2)
+              g2[v2] = b2[v2];
+            n2 && n2.dispatchEvent(g2), m2[t2] && m2[t2].call(e2, g2);
+          }
+        }
+        function z(t2, e2) {
+          var n2 = (o2 = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {}).evt, o2 = i(o2, G);
+          K.pluginEvent.bind(Bt)(t2, e2, M({ dragEl: q, parentEl: V, ghostEl: Z, rootEl: $, nextEl: Q, lastDownEl: J, cloneEl: tt, cloneHidden: et, dragStarted: pt, putSortable: lt, activeSortable: Bt.active, originalEvent: n2, oldIndex: nt, oldDraggableIndex: it, newIndex: ot, newDraggableIndex: rt, hideGhostForTarget: kt, unhideGhostForTarget: Rt, cloneNowHidden: function() {
+            et = true;
+          }, cloneNowShown: function() {
+            et = false;
+          }, dispatchSortableEvent: function(t3) {
+            U({ sortable: e2, name: t3, originalEvent: n2 });
+          } }, o2));
+        }
+        var G = ["evt"];
+        function U(t2) {
+          W(M({ putSortable: lt, cloneEl: tt, targetEl: q, rootEl: $, oldIndex: nt, oldDraggableIndex: it, newIndex: ot, newDraggableIndex: rt }, t2));
+        }
+        var q, V, Z, $, Q, J, tt, et, nt, ot, it, rt, at, lt, st, ct, ut, dt, ht, ft, pt, gt, mt, vt, bt, yt = false, wt = false, Et = [], Dt = false, St = false, _t = [], Ct = false, Tt = [], xt = "undefined" != typeof document, Ot = n, At = w || y ? "cssFloat" : "float", Mt = xt && !c && !n && "draggable" in document.createElement("div"), Nt = function() {
+          if (xt) {
+            if (y)
+              return false;
+            var t2 = document.createElement("x");
+            return t2.style.cssText = "pointer-events:auto", "auto" === t2.style.pointerEvents;
+          }
+        }(), It = function(t2, e2) {
+          var n2 = P(t2), o2 = parseInt(n2.width) - parseInt(n2.paddingLeft) - parseInt(n2.paddingRight) - parseInt(n2.borderLeftWidth) - parseInt(n2.borderRightWidth), i2 = X(t2, 0, e2), r2 = X(t2, 1, e2), a2 = i2 && P(i2), l2 = r2 && P(r2), s2 = a2 && parseInt(a2.marginLeft) + parseInt(a2.marginRight) + k(i2).width, t2 = l2 && parseInt(l2.marginLeft) + parseInt(l2.marginRight) + k(r2).width;
+          if ("flex" === n2.display)
+            return "column" === n2.flexDirection || "column-reverse" === n2.flexDirection ? "vertical" : "horizontal";
+          if ("grid" === n2.display)
+            return n2.gridTemplateColumns.split(" ").length <= 1 ? "vertical" : "horizontal";
+          if (i2 && a2.float && "none" !== a2.float) {
+            e2 = "left" === a2.float ? "left" : "right";
+            return !r2 || "both" !== l2.clear && l2.clear !== e2 ? "horizontal" : "vertical";
+          }
+          return i2 && ("block" === a2.display || "flex" === a2.display || "table" === a2.display || "grid" === a2.display || o2 <= s2 && "none" === n2[At] || r2 && "none" === n2[At] && o2 < s2 + t2) ? "vertical" : "horizontal";
+        }, Pt = function(t2) {
+          function l2(r2, a2) {
+            return function(t3, e3, n3, o2) {
+              var i2 = t3.options.group.name && e3.options.group.name && t3.options.group.name === e3.options.group.name;
+              if (null == r2 && (a2 || i2))
+                return true;
+              if (null == r2 || false === r2)
+                return false;
+              if (a2 && "clone" === r2)
+                return r2;
+              if ("function" == typeof r2)
+                return l2(r2(t3, e3, n3, o2), a2)(t3, e3, n3, o2);
+              e3 = (a2 ? t3 : e3).options.group.name;
+              return true === r2 || "string" == typeof r2 && r2 === e3 || r2.join && -1 < r2.indexOf(e3);
+            };
+          }
+          var e2 = {}, n2 = t2.group;
+          n2 && "object" == o(n2) || (n2 = { name: n2 }), e2.name = n2.name, e2.checkPull = l2(n2.pull, true), e2.checkPut = l2(n2.put), e2.revertClone = n2.revertClone, t2.group = e2;
+        }, kt = function() {
+          !Nt && Z && P(Z, "display", "none");
+        }, Rt = function() {
+          !Nt && Z && P(Z, "display", "");
+        };
+        xt && !c && document.addEventListener("click", function(t2) {
+          if (wt)
+            return t2.preventDefault(), t2.stopPropagation && t2.stopPropagation(), t2.stopImmediatePropagation && t2.stopImmediatePropagation(), wt = false;
+        }, true);
+        function Xt(t2) {
+          if (q) {
+            t2 = t2.touches ? t2.touches[0] : t2;
+            var e2 = (i2 = t2.clientX, r2 = t2.clientY, Et.some(function(t3) {
+              var e3 = t3[j].options.emptyInsertThreshold;
+              if (e3 && !Y(t3)) {
+                var n3 = k(t3), o3 = i2 >= n3.left - e3 && i2 <= n3.right + e3, e3 = r2 >= n3.top - e3 && r2 <= n3.bottom + e3;
+                return o3 && e3 ? a2 = t3 : void 0;
+              }
+            }), a2);
+            if (e2) {
+              var n2, o2 = {};
+              for (n2 in t2)
+                t2.hasOwnProperty(n2) && (o2[n2] = t2[n2]);
+              o2.target = o2.rootEl = e2, o2.preventDefault = void 0, o2.stopPropagation = void 0, e2[j]._onDragOver(o2);
+            }
+          }
+          var i2, r2, a2;
+        }
+        function Yt(t2) {
+          q && q.parentNode[j]._isOutsideThisEl(t2.target);
+        }
+        function Bt(t2, e2) {
+          if (!t2 || !t2.nodeType || 1 !== t2.nodeType)
+            throw "Sortable: `el` must be an HTMLElement, not ".concat({}.toString.call(t2));
+          this.el = t2, this.options = e2 = a({}, e2), t2[j] = this;
+          var n2, o2, i2 = { group: null, sort: true, disabled: false, store: null, handle: null, draggable: /^[uo]l$/i.test(t2.nodeName) ? ">li" : ">*", swapThreshold: 1, invertSwap: false, invertedSwapThreshold: null, removeCloneOnHide: true, direction: function() {
+            return It(t2, this.options);
+          }, ghostClass: "sortable-ghost", chosenClass: "sortable-chosen", dragClass: "sortable-drag", ignore: "a, img", filter: null, preventOnFilter: true, animation: 0, easing: null, setData: function(t3, e3) {
+            t3.setData("Text", e3.textContent);
+          }, dropBubble: false, dragoverBubble: false, dataIdAttr: "data-id", delay: 0, delayOnTouchOnly: false, touchStartThreshold: (Number.parseInt ? Number : window).parseInt(window.devicePixelRatio, 10) || 1, forceFallback: false, fallbackClass: "sortable-fallback", fallbackOnBody: false, fallbackTolerance: 0, fallbackOffset: { x: 0, y: 0 }, supportPointer: false !== Bt.supportPointer && "PointerEvent" in window && !u, emptyInsertThreshold: 5 };
+          for (n2 in K.initializePlugins(this, t2, i2), i2)
+            n2 in e2 || (e2[n2] = i2[n2]);
+          for (o2 in Pt(e2), this)
+            "_" === o2.charAt(0) && "function" == typeof this[o2] && (this[o2] = this[o2].bind(this));
+          this.nativeDraggable = !e2.forceFallback && Mt, this.nativeDraggable && (this.options.touchStartThreshold = 1), e2.supportPointer ? h(t2, "pointerdown", this._onTapStart) : (h(t2, "mousedown", this._onTapStart), h(t2, "touchstart", this._onTapStart)), this.nativeDraggable && (h(t2, "dragover", this), h(t2, "dragenter", this)), Et.push(this.el), e2.store && e2.store.get && this.sort(e2.store.get(this) || []), a(this, x());
+        }
+        function Ft(t2, e2, n2, o2, i2, r2, a2, l2) {
+          var s2, c2, u2 = t2[j], d2 = u2.options.onMove;
+          return !window.CustomEvent || y || w ? (s2 = document.createEvent("Event")).initEvent("move", true, true) : s2 = new CustomEvent("move", { bubbles: true, cancelable: true }), s2.to = e2, s2.from = t2, s2.dragged = n2, s2.draggedRect = o2, s2.related = i2 || e2, s2.relatedRect = r2 || k(e2), s2.willInsertAfter = l2, s2.originalEvent = a2, t2.dispatchEvent(s2), c2 = d2 ? d2.call(u2, s2, a2) : c2;
+        }
+        function jt(t2) {
+          t2.draggable = false;
+        }
+        function Ht() {
+          Ct = false;
+        }
+        function Lt(t2) {
+          return setTimeout(t2, 0);
+        }
+        function Kt(t2) {
+          return clearTimeout(t2);
+        }
+        Bt.prototype = { constructor: Bt, _isOutsideThisEl: function(t2) {
+          this.el.contains(t2) || t2 === this.el || (gt = null);
+        }, _getDirection: function(t2, e2) {
+          return "function" == typeof this.options.direction ? this.options.direction.call(this, t2, e2, q) : this.options.direction;
+        }, _onTapStart: function(e2) {
+          if (e2.cancelable) {
+            var n2 = this, o2 = this.el, t2 = this.options, i2 = t2.preventOnFilter, r2 = e2.type, a2 = e2.touches && e2.touches[0] || e2.pointerType && "touch" === e2.pointerType && e2, l2 = (a2 || e2).target, s2 = e2.target.shadowRoot && (e2.path && e2.path[0] || e2.composedPath && e2.composedPath()[0]) || l2, c2 = t2.filter;
+            if (!function(t3) {
+              Tt.length = 0;
+              var e3 = t3.getElementsByTagName("input"), n3 = e3.length;
+              for (; n3--; ) {
+                var o3 = e3[n3];
+                o3.checked && Tt.push(o3);
+              }
+            }(o2), !q && !(/mousedown|pointerdown/.test(r2) && 0 !== e2.button || t2.disabled) && !s2.isContentEditable && (this.nativeDraggable || !u || !l2 || "SELECT" !== l2.tagName.toUpperCase()) && !((l2 = N(l2, t2.draggable, o2, false)) && l2.animated || J === l2)) {
+              if (nt = B(l2), it = B(l2, t2.draggable), "function" == typeof c2) {
+                if (c2.call(this, e2, l2, this))
+                  return U({ sortable: n2, rootEl: s2, name: "filter", targetEl: l2, toEl: o2, fromEl: o2 }), z("filter", n2, { evt: e2 }), void (i2 && e2.cancelable && e2.preventDefault());
+              } else if (c2 = c2 && c2.split(",").some(function(t3) {
+                if (t3 = N(s2, t3.trim(), o2, false))
+                  return U({ sortable: n2, rootEl: t3, name: "filter", targetEl: l2, fromEl: o2, toEl: o2 }), z("filter", n2, { evt: e2 }), true;
+              }))
+                return void (i2 && e2.cancelable && e2.preventDefault());
+              t2.handle && !N(s2, t2.handle, o2, false) || this._prepareDragStart(e2, a2, l2);
+            }
+          }
+        }, _prepareDragStart: function(t2, e2, n2) {
+          var o2, i2 = this, r2 = i2.el, a2 = i2.options, l2 = r2.ownerDocument;
+          n2 && !q && n2.parentNode === r2 && (o2 = k(n2), $ = r2, V = (q = n2).parentNode, Q = q.nextSibling, J = n2, at = a2.group, st = { target: Bt.dragged = q, clientX: (e2 || t2).clientX, clientY: (e2 || t2).clientY }, ht = st.clientX - o2.left, ft = st.clientY - o2.top, this._lastX = (e2 || t2).clientX, this._lastY = (e2 || t2).clientY, q.style["will-change"] = "all", o2 = function() {
+            z("delayEnded", i2, { evt: t2 }), Bt.eventCanceled ? i2._onDrop() : (i2._disableDelayedDragEvents(), !s && i2.nativeDraggable && (q.draggable = true), i2._triggerDragStart(t2, e2), U({ sortable: i2, name: "choose", originalEvent: t2 }), I(q, a2.chosenClass, true));
+          }, a2.ignore.split(",").forEach(function(t3) {
+            b(q, t3.trim(), jt);
+          }), h(l2, "dragover", Xt), h(l2, "mousemove", Xt), h(l2, "touchmove", Xt), h(l2, "mouseup", i2._onDrop), h(l2, "touchend", i2._onDrop), h(l2, "touchcancel", i2._onDrop), s && this.nativeDraggable && (this.options.touchStartThreshold = 4, q.draggable = true), z("delayStart", this, { evt: t2 }), !a2.delay || a2.delayOnTouchOnly && !e2 || this.nativeDraggable && (w || y) ? o2() : Bt.eventCanceled ? this._onDrop() : (h(l2, "mouseup", i2._disableDelayedDrag), h(l2, "touchend", i2._disableDelayedDrag), h(l2, "touchcancel", i2._disableDelayedDrag), h(l2, "mousemove", i2._delayedDragTouchMoveHandler), h(l2, "touchmove", i2._delayedDragTouchMoveHandler), a2.supportPointer && h(l2, "pointermove", i2._delayedDragTouchMoveHandler), i2._dragStartTimer = setTimeout(o2, a2.delay)));
+        }, _delayedDragTouchMoveHandler: function(t2) {
+          t2 = t2.touches ? t2.touches[0] : t2;
+          Math.max(Math.abs(t2.clientX - this._lastX), Math.abs(t2.clientY - this._lastY)) >= Math.floor(this.options.touchStartThreshold / (this.nativeDraggable && window.devicePixelRatio || 1)) && this._disableDelayedDrag();
+        }, _disableDelayedDrag: function() {
+          q && jt(q), clearTimeout(this._dragStartTimer), this._disableDelayedDragEvents();
+        }, _disableDelayedDragEvents: function() {
+          var t2 = this.el.ownerDocument;
+          f(t2, "mouseup", this._disableDelayedDrag), f(t2, "touchend", this._disableDelayedDrag), f(t2, "touchcancel", this._disableDelayedDrag), f(t2, "mousemove", this._delayedDragTouchMoveHandler), f(t2, "touchmove", this._delayedDragTouchMoveHandler), f(t2, "pointermove", this._delayedDragTouchMoveHandler);
+        }, _triggerDragStart: function(t2, e2) {
+          e2 = e2 || "touch" == t2.pointerType && t2, !this.nativeDraggable || e2 ? this.options.supportPointer ? h(document, "pointermove", this._onTouchMove) : h(document, e2 ? "touchmove" : "mousemove", this._onTouchMove) : (h(q, "dragend", this), h($, "dragstart", this._onDragStart));
+          try {
+            document.selection ? Lt(function() {
+              document.selection.empty();
+            }) : window.getSelection().removeAllRanges();
+          } catch (t3) {
+          }
+        }, _dragStarted: function(t2, e2) {
+          var n2;
+          yt = false, $ && q ? (z("dragStarted", this, { evt: e2 }), this.nativeDraggable && h(document, "dragover", Yt), n2 = this.options, t2 || I(q, n2.dragClass, false), I(q, n2.ghostClass, true), Bt.active = this, t2 && this._appendGhost(), U({ sortable: this, name: "start", originalEvent: e2 })) : this._nulling();
+        }, _emulateDragOver: function() {
+          if (ct) {
+            this._lastX = ct.clientX, this._lastY = ct.clientY, kt();
+            for (var t2 = document.elementFromPoint(ct.clientX, ct.clientY), e2 = t2; t2 && t2.shadowRoot && (t2 = t2.shadowRoot.elementFromPoint(ct.clientX, ct.clientY)) !== e2; )
+              e2 = t2;
+            if (q.parentNode[j]._isOutsideThisEl(t2), e2)
+              do {
+                if (e2[j]) {
+                  if (e2[j]._onDragOver({ clientX: ct.clientX, clientY: ct.clientY, target: t2, rootEl: e2 }) && !this.options.dragoverBubble)
+                    break;
+                }
+              } while (e2 = (t2 = e2).parentNode);
+            Rt();
+          }
+        }, _onTouchMove: function(t2) {
+          if (st) {
+            var e2 = this.options, n2 = e2.fallbackTolerance, o2 = e2.fallbackOffset, i2 = t2.touches ? t2.touches[0] : t2, r2 = Z && v(Z, true), a2 = Z && r2 && r2.a, l2 = Z && r2 && r2.d, e2 = Ot && bt && E(bt), a2 = (i2.clientX - st.clientX + o2.x) / (a2 || 1) + (e2 ? e2[0] - _t[0] : 0) / (a2 || 1), l2 = (i2.clientY - st.clientY + o2.y) / (l2 || 1) + (e2 ? e2[1] - _t[1] : 0) / (l2 || 1);
+            if (!Bt.active && !yt) {
+              if (n2 && Math.max(Math.abs(i2.clientX - this._lastX), Math.abs(i2.clientY - this._lastY)) < n2)
+                return;
+              this._onDragStart(t2, true);
+            }
+            Z && (r2 ? (r2.e += a2 - (ut || 0), r2.f += l2 - (dt || 0)) : r2 = { a: 1, b: 0, c: 0, d: 1, e: a2, f: l2 }, r2 = "matrix(".concat(r2.a, ",").concat(r2.b, ",").concat(r2.c, ",").concat(r2.d, ",").concat(r2.e, ",").concat(r2.f, ")"), P(Z, "webkitTransform", r2), P(Z, "mozTransform", r2), P(Z, "msTransform", r2), P(Z, "transform", r2), ut = a2, dt = l2, ct = i2), t2.cancelable && t2.preventDefault();
+          }
+        }, _appendGhost: function() {
+          if (!Z) {
+            var t2 = this.options.fallbackOnBody ? document.body : $, e2 = k(q, true, Ot, true, t2), n2 = this.options;
+            if (Ot) {
+              for (bt = t2; "static" === P(bt, "position") && "none" === P(bt, "transform") && bt !== document; )
+                bt = bt.parentNode;
+              bt !== document.body && bt !== document.documentElement ? (bt === document && (bt = O()), e2.top += bt.scrollTop, e2.left += bt.scrollLeft) : bt = O(), _t = E(bt);
+            }
+            I(Z = q.cloneNode(true), n2.ghostClass, false), I(Z, n2.fallbackClass, true), I(Z, n2.dragClass, true), P(Z, "transition", ""), P(Z, "transform", ""), P(Z, "box-sizing", "border-box"), P(Z, "margin", 0), P(Z, "top", e2.top), P(Z, "left", e2.left), P(Z, "width", e2.width), P(Z, "height", e2.height), P(Z, "opacity", "0.8"), P(Z, "position", Ot ? "absolute" : "fixed"), P(Z, "zIndex", "100000"), P(Z, "pointerEvents", "none"), Bt.ghost = Z, t2.appendChild(Z), P(Z, "transform-origin", ht / parseInt(Z.style.width) * 100 + "% " + ft / parseInt(Z.style.height) * 100 + "%");
+          }
+        }, _onDragStart: function(t2, e2) {
+          var n2 = this, o2 = t2.dataTransfer, i2 = n2.options;
+          z("dragStart", this, { evt: t2 }), Bt.eventCanceled ? this._onDrop() : (z("setupClone", this), Bt.eventCanceled || ((tt = _(q)).removeAttribute("id"), tt.draggable = false, tt.style["will-change"] = "", this._hideClone(), I(tt, this.options.chosenClass, false), Bt.clone = tt), n2.cloneId = Lt(function() {
+            z("clone", n2), Bt.eventCanceled || (n2.options.removeCloneOnHide || $.insertBefore(tt, q), n2._hideClone(), U({ sortable: n2, name: "clone" }));
+          }), e2 || I(q, i2.dragClass, true), e2 ? (wt = true, n2._loopId = setInterval(n2._emulateDragOver, 50)) : (f(document, "mouseup", n2._onDrop), f(document, "touchend", n2._onDrop), f(document, "touchcancel", n2._onDrop), o2 && (o2.effectAllowed = "move", i2.setData && i2.setData.call(n2, o2, q)), h(document, "drop", n2), P(q, "transform", "translateZ(0)")), yt = true, n2._dragStartId = Lt(n2._dragStarted.bind(n2, e2, t2)), h(document, "selectstart", n2), pt = true, u && P(document.body, "user-select", "none"));
+        }, _onDragOver: function(n2) {
+          var o2, i2, r2, t2, a2 = this.el, l2 = n2.target, e2 = this.options, s2 = e2.group, c2 = Bt.active, u2 = at === s2, d2 = e2.sort, h2 = lt || c2, f2 = this, p2 = false;
+          if (!Ct) {
+            if (void 0 !== n2.preventDefault && n2.cancelable && n2.preventDefault(), l2 = N(l2, e2.draggable, a2, true), T2("dragOver"), Bt.eventCanceled)
+              return p2;
+            if (q.contains(n2.target) || l2.animated && l2.animatingX && l2.animatingY || f2._ignoreWhileAnimating === l2)
+              return O2(false);
+            if (wt = false, c2 && !e2.disabled && (u2 ? d2 || (i2 = V !== $) : lt === this || (this.lastPutMode = at.checkPull(this, c2, q, n2)) && s2.checkPut(this, c2, q, n2))) {
+              if (r2 = "vertical" === this._getDirection(n2, l2), o2 = k(q), T2("dragOverValid"), Bt.eventCanceled)
+                return p2;
+              if (i2)
+                return V = $, x2(), this._hideClone(), T2("revert"), Bt.eventCanceled || (Q ? $.insertBefore(q, Q) : $.appendChild(q)), O2(true);
+              var g2 = Y(a2, e2.draggable);
+              if (!g2 || function(t3, e3, n3) {
+                n3 = k(Y(n3.el, n3.options.draggable));
+                return e3 ? t3.clientX > n3.right + 10 || t3.clientX <= n3.right && t3.clientY > n3.bottom && t3.clientX >= n3.left : t3.clientX > n3.right && t3.clientY > n3.top || t3.clientX <= n3.right && t3.clientY > n3.bottom + 10;
+              }(n2, r2, this) && !g2.animated) {
+                if (g2 === q)
+                  return O2(false);
+                if ((l2 = g2 && a2 === n2.target ? g2 : l2) && (w2 = k(l2)), false !== Ft($, a2, q, o2, l2, w2, n2, !!l2))
+                  return x2(), g2 && g2.nextSibling ? a2.insertBefore(q, g2.nextSibling) : a2.appendChild(q), V = a2, A2(), O2(true);
+              } else if (g2 && function(t3, e3, n3) {
+                n3 = k(X(n3.el, 0, n3.options, true));
+                return e3 ? t3.clientX < n3.left - 10 || t3.clientY < n3.top && t3.clientX < n3.right : t3.clientY < n3.top - 10 || t3.clientY < n3.bottom && t3.clientX < n3.left;
+              }(n2, r2, this)) {
+                var m2 = X(a2, 0, e2, true);
+                if (m2 === q)
+                  return O2(false);
+                if (w2 = k(l2 = m2), false !== Ft($, a2, q, o2, l2, w2, n2, false))
+                  return x2(), a2.insertBefore(q, m2), V = a2, A2(), O2(true);
+              } else if (l2.parentNode === a2) {
+                var v2, b2, y2, w2 = k(l2), E2 = q.parentNode !== a2, D2 = (D2 = q.animated && q.toRect || o2, C2 = l2.animated && l2.toRect || w2, S2 = (t2 = r2) ? D2.left : D2.top, s2 = t2 ? D2.right : D2.bottom, g2 = t2 ? D2.width : D2.height, m2 = t2 ? C2.left : C2.top, D2 = t2 ? C2.right : C2.bottom, C2 = t2 ? C2.width : C2.height, !(S2 === m2 || s2 === D2 || S2 + g2 / 2 === m2 + C2 / 2)), S2 = r2 ? "top" : "left", g2 = R(l2, "top", "top") || R(q, "top", "top"), m2 = g2 ? g2.scrollTop : void 0;
+                if (gt !== l2 && (b2 = w2[S2], Dt = false, St = !D2 && e2.invertSwap || E2), 0 !== (v2 = function(t3, e3, n3, o3, i3, r3, a3, l3) {
+                  var s3 = o3 ? t3.clientY : t3.clientX, c3 = o3 ? n3.height : n3.width, t3 = o3 ? n3.top : n3.left, o3 = o3 ? n3.bottom : n3.right, n3 = false;
+                  if (!a3) {
+                    if (l3 && vt < c3 * i3) {
+                      if (Dt = !Dt && (1 === mt ? t3 + c3 * r3 / 2 < s3 : s3 < o3 - c3 * r3 / 2) ? true : Dt)
+                        n3 = true;
+                      else if (1 === mt ? s3 < t3 + vt : o3 - vt < s3)
+                        return -mt;
+                    } else if (t3 + c3 * (1 - i3) / 2 < s3 && s3 < o3 - c3 * (1 - i3) / 2)
+                      return function(t4) {
+                        return B(q) < B(t4) ? 1 : -1;
+                      }(e3);
+                  }
+                  if ((n3 = n3 || a3) && (s3 < t3 + c3 * r3 / 2 || o3 - c3 * r3 / 2 < s3))
+                    return t3 + c3 / 2 < s3 ? 1 : -1;
+                  return 0;
+                }(n2, l2, w2, r2, D2 ? 1 : e2.swapThreshold, null == e2.invertedSwapThreshold ? e2.swapThreshold : e2.invertedSwapThreshold, St, gt === l2)))
+                  for (var _2 = B(q); (y2 = V.children[_2 -= v2]) && ("none" === P(y2, "display") || y2 === Z); )
+                    ;
+                if (0 === v2 || y2 === l2)
+                  return O2(false);
+                mt = v2;
+                var C2 = (gt = l2).nextElementSibling, E2 = false, D2 = Ft($, a2, q, o2, l2, w2, n2, E2 = 1 === v2);
+                if (false !== D2)
+                  return 1 !== D2 && -1 !== D2 || (E2 = 1 === D2), Ct = true, setTimeout(Ht, 30), x2(), E2 && !C2 ? a2.appendChild(q) : l2.parentNode.insertBefore(q, E2 ? C2 : l2), g2 && F(g2, 0, m2 - g2.scrollTop), V = q.parentNode, void 0 === b2 || St || (vt = Math.abs(b2 - k(l2)[S2])), A2(), O2(true);
+              }
+              if (a2.contains(q))
+                return O2(false);
+            }
+            return false;
+          }
+          function T2(t3, e3) {
+            z(t3, f2, M({ evt: n2, isOwner: u2, axis: r2 ? "vertical" : "horizontal", revert: i2, dragRect: o2, targetRect: w2, canSort: d2, fromSortable: h2, target: l2, completed: O2, onMove: function(t4, e4) {
+              return Ft($, a2, q, o2, t4, k(t4), n2, e4);
+            }, changed: A2 }, e3));
+          }
+          function x2() {
+            T2("dragOverAnimationCapture"), f2.captureAnimationState(), f2 !== h2 && h2.captureAnimationState();
+          }
+          function O2(t3) {
+            return T2("dragOverCompleted", { insertion: t3 }), t3 && (u2 ? c2._hideClone() : c2._showClone(f2), f2 !== h2 && (I(q, (lt || c2).options.ghostClass, false), I(q, e2.ghostClass, true)), lt !== f2 && f2 !== Bt.active ? lt = f2 : f2 === Bt.active && lt && (lt = null), h2 === f2 && (f2._ignoreWhileAnimating = l2), f2.animateAll(function() {
+              T2("dragOverAnimationComplete"), f2._ignoreWhileAnimating = null;
+            }), f2 !== h2 && (h2.animateAll(), h2._ignoreWhileAnimating = null)), (l2 === q && !q.animated || l2 === a2 && !l2.animated) && (gt = null), e2.dragoverBubble || n2.rootEl || l2 === document || (q.parentNode[j]._isOutsideThisEl(n2.target), t3 || Xt(n2)), !e2.dragoverBubble && n2.stopPropagation && n2.stopPropagation(), p2 = true;
+          }
+          function A2() {
+            ot = B(q), rt = B(q, e2.draggable), U({ sortable: f2, name: "change", toEl: a2, newIndex: ot, newDraggableIndex: rt, originalEvent: n2 });
+          }
+        }, _ignoreWhileAnimating: null, _offMoveEvents: function() {
+          f(document, "mousemove", this._onTouchMove), f(document, "touchmove", this._onTouchMove), f(document, "pointermove", this._onTouchMove), f(document, "dragover", Xt), f(document, "mousemove", Xt), f(document, "touchmove", Xt);
+        }, _offUpEvents: function() {
+          var t2 = this.el.ownerDocument;
+          f(t2, "mouseup", this._onDrop), f(t2, "touchend", this._onDrop), f(t2, "pointerup", this._onDrop), f(t2, "touchcancel", this._onDrop), f(document, "selectstart", this);
+        }, _onDrop: function(t2) {
+          var e2 = this.el, n2 = this.options;
+          ot = B(q), rt = B(q, n2.draggable), z("drop", this, { evt: t2 }), V = q && q.parentNode, ot = B(q), rt = B(q, n2.draggable), Bt.eventCanceled || (Dt = St = yt = false, clearInterval(this._loopId), clearTimeout(this._dragStartTimer), Kt(this.cloneId), Kt(this._dragStartId), this.nativeDraggable && (f(document, "drop", this), f(e2, "dragstart", this._onDragStart)), this._offMoveEvents(), this._offUpEvents(), u && P(document.body, "user-select", ""), P(q, "transform", ""), t2 && (pt && (t2.cancelable && t2.preventDefault(), n2.dropBubble || t2.stopPropagation()), Z && Z.parentNode && Z.parentNode.removeChild(Z), ($ === V || lt && "clone" !== lt.lastPutMode) && tt && tt.parentNode && tt.parentNode.removeChild(tt), q && (this.nativeDraggable && f(q, "dragend", this), jt(q), q.style["will-change"] = "", pt && !yt && I(q, (lt || this).options.ghostClass, false), I(q, this.options.chosenClass, false), U({ sortable: this, name: "unchoose", toEl: V, newIndex: null, newDraggableIndex: null, originalEvent: t2 }), $ !== V ? (0 <= ot && (U({ rootEl: V, name: "add", toEl: V, fromEl: $, originalEvent: t2 }), U({ sortable: this, name: "remove", toEl: V, originalEvent: t2 }), U({ rootEl: V, name: "sort", toEl: V, fromEl: $, originalEvent: t2 }), U({ sortable: this, name: "sort", toEl: V, originalEvent: t2 })), lt && lt.save()) : ot !== nt && 0 <= ot && (U({ sortable: this, name: "update", toEl: V, originalEvent: t2 }), U({ sortable: this, name: "sort", toEl: V, originalEvent: t2 })), Bt.active && (null != ot && -1 !== ot || (ot = nt, rt = it), U({ sortable: this, name: "end", toEl: V, originalEvent: t2 }), this.save())))), this._nulling();
+        }, _nulling: function() {
+          z("nulling", this), $ = q = V = Z = Q = tt = J = et = st = ct = pt = ot = rt = nt = it = gt = mt = lt = at = Bt.dragged = Bt.ghost = Bt.clone = Bt.active = null, Tt.forEach(function(t2) {
+            t2.checked = true;
+          }), Tt.length = ut = dt = 0;
+        }, handleEvent: function(t2) {
+          switch (t2.type) {
+            case "drop":
+            case "dragend":
+              this._onDrop(t2);
+              break;
+            case "dragenter":
+            case "dragover":
+              q && (this._onDragOver(t2), function(t3) {
+                t3.dataTransfer && (t3.dataTransfer.dropEffect = "move");
+                t3.cancelable && t3.preventDefault();
+              }(t2));
+              break;
+            case "selectstart":
+              t2.preventDefault();
+          }
+        }, toArray: function() {
+          for (var t2, e2 = [], n2 = this.el.children, o2 = 0, i2 = n2.length, r2 = this.options; o2 < i2; o2++)
+            N(t2 = n2[o2], r2.draggable, this.el, false) && e2.push(t2.getAttribute(r2.dataIdAttr) || function(t3) {
+              var e3 = t3.tagName + t3.className + t3.src + t3.href + t3.textContent, n3 = e3.length, o3 = 0;
+              for (; n3--; )
+                o3 += e3.charCodeAt(n3);
+              return o3.toString(36);
+            }(t2));
+          return e2;
+        }, sort: function(t2, e2) {
+          var n2 = {}, o2 = this.el;
+          this.toArray().forEach(function(t3, e3) {
+            e3 = o2.children[e3];
+            N(e3, this.options.draggable, o2, false) && (n2[t3] = e3);
+          }, this), e2 && this.captureAnimationState(), t2.forEach(function(t3) {
+            n2[t3] && (o2.removeChild(n2[t3]), o2.appendChild(n2[t3]));
+          }), e2 && this.animateAll();
+        }, save: function() {
+          var t2 = this.options.store;
+          t2 && t2.set && t2.set(this);
+        }, closest: function(t2, e2) {
+          return N(t2, e2 || this.options.draggable, this.el, false);
+        }, option: function(t2, e2) {
+          var n2 = this.options;
+          if (void 0 === e2)
+            return n2[t2];
+          var o2 = K.modifyOption(this, t2, e2);
+          n2[t2] = void 0 !== o2 ? o2 : e2, "group" === t2 && Pt(n2);
+        }, destroy: function() {
+          z("destroy", this);
+          var t2 = this.el;
+          t2[j] = null, f(t2, "mousedown", this._onTapStart), f(t2, "touchstart", this._onTapStart), f(t2, "pointerdown", this._onTapStart), this.nativeDraggable && (f(t2, "dragover", this), f(t2, "dragenter", this)), Array.prototype.forEach.call(t2.querySelectorAll("[draggable]"), function(t3) {
+            t3.removeAttribute("draggable");
+          }), this._onDrop(), this._disableDelayedDragEvents(), Et.splice(Et.indexOf(this.el), 1), this.el = t2 = null;
+        }, _hideClone: function() {
+          et || (z("hideClone", this), Bt.eventCanceled || (P(tt, "display", "none"), this.options.removeCloneOnHide && tt.parentNode && tt.parentNode.removeChild(tt), et = true));
+        }, _showClone: function(t2) {
+          "clone" === t2.lastPutMode ? et && (z("showClone", this), Bt.eventCanceled || (q.parentNode != $ || this.options.group.revertClone ? Q ? $.insertBefore(tt, Q) : $.appendChild(tt) : $.insertBefore(tt, q), this.options.group.revertClone && this.animate(q, tt), P(tt, "display", ""), et = false)) : this._hideClone();
+        } }, xt && h(document, "touchmove", function(t2) {
+          (Bt.active || yt) && t2.cancelable && t2.preventDefault();
+        }), Bt.utils = { on: h, off: f, css: P, find: b, is: function(t2, e2) {
+          return !!N(t2, e2, t2, false);
+        }, extend: function(t2, e2) {
+          if (t2 && e2)
+            for (var n2 in e2)
+              e2.hasOwnProperty(n2) && (t2[n2] = e2[n2]);
+          return t2;
+        }, throttle: S, closest: N, toggleClass: I, clone: _, index: B, nextTick: Lt, cancelNextTick: Kt, detectDirection: It, getChild: X }, Bt.get = function(t2) {
+          return t2[j];
+        }, Bt.mount = function() {
+          for (var t2 = arguments.length, e2 = new Array(t2), n2 = 0; n2 < t2; n2++)
+            e2[n2] = arguments[n2];
+          (e2 = e2[0].constructor === Array ? e2[0] : e2).forEach(function(t3) {
+            if (!t3.prototype || !t3.prototype.constructor)
+              throw "Sortable: Mounted plugin must be a constructor function, not ".concat({}.toString.call(t3));
+            t3.utils && (Bt.utils = M(M({}, Bt.utils), t3.utils)), K.mount(t3);
+          });
+        }, Bt.create = function(t2, e2) {
+          return new Bt(t2, e2);
+        };
+        var Wt, zt, Gt, Ut, qt, Vt, Zt = [], $t = !(Bt.version = "1.15.0");
+        function Qt() {
+          Zt.forEach(function(t2) {
+            clearInterval(t2.pid);
+          }), Zt = [];
+        }
+        function Jt() {
+          clearInterval(Vt);
+        }
+        var te, ee = S(function(n2, t2, e2, o2) {
+          if (t2.scroll) {
+            var i2, r2 = (n2.touches ? n2.touches[0] : n2).clientX, a2 = (n2.touches ? n2.touches[0] : n2).clientY, l2 = t2.scrollSensitivity, s2 = t2.scrollSpeed, c2 = O(), u2 = false;
+            zt !== e2 && (zt = e2, Qt(), Wt = t2.scroll, i2 = t2.scrollFn, true === Wt && (Wt = A(e2, true)));
+            var d2 = 0, h2 = Wt;
+            do {
+              var f2 = h2, p2 = k(f2), g2 = p2.top, m2 = p2.bottom, v2 = p2.left, b2 = p2.right, y2 = p2.width, w2 = p2.height, E2 = void 0, D2 = void 0, S2 = f2.scrollWidth, _2 = f2.scrollHeight, C2 = P(f2), T2 = f2.scrollLeft, p2 = f2.scrollTop, D2 = f2 === c2 ? (E2 = y2 < S2 && ("auto" === C2.overflowX || "scroll" === C2.overflowX || "visible" === C2.overflowX), w2 < _2 && ("auto" === C2.overflowY || "scroll" === C2.overflowY || "visible" === C2.overflowY)) : (E2 = y2 < S2 && ("auto" === C2.overflowX || "scroll" === C2.overflowX), w2 < _2 && ("auto" === C2.overflowY || "scroll" === C2.overflowY)), T2 = E2 && (Math.abs(b2 - r2) <= l2 && T2 + y2 < S2) - (Math.abs(v2 - r2) <= l2 && !!T2), p2 = D2 && (Math.abs(m2 - a2) <= l2 && p2 + w2 < _2) - (Math.abs(g2 - a2) <= l2 && !!p2);
+              if (!Zt[d2])
+                for (var x2 = 0; x2 <= d2; x2++)
+                  Zt[x2] || (Zt[x2] = {});
+              Zt[d2].vx == T2 && Zt[d2].vy == p2 && Zt[d2].el === f2 || (Zt[d2].el = f2, Zt[d2].vx = T2, Zt[d2].vy = p2, clearInterval(Zt[d2].pid), 0 == T2 && 0 == p2 || (u2 = true, Zt[d2].pid = setInterval(function() {
+                o2 && 0 === this.layer && Bt.active._onTouchMove(qt);
+                var t3 = Zt[this.layer].vy ? Zt[this.layer].vy * s2 : 0, e3 = Zt[this.layer].vx ? Zt[this.layer].vx * s2 : 0;
+                "function" == typeof i2 && "continue" !== i2.call(Bt.dragged.parentNode[j], e3, t3, n2, qt, Zt[this.layer].el) || F(Zt[this.layer].el, e3, t3);
+              }.bind({ layer: d2 }), 24))), d2++;
+            } while (t2.bubbleScroll && h2 !== c2 && (h2 = A(h2, false)));
+            $t = u2;
+          }
+        }, 30), c = function(t2) {
+          var e2 = t2.originalEvent, n2 = t2.putSortable, o2 = t2.dragEl, i2 = t2.activeSortable, r2 = t2.dispatchSortableEvent, a2 = t2.hideGhostForTarget, t2 = t2.unhideGhostForTarget;
+          e2 && (i2 = n2 || i2, a2(), e2 = e2.changedTouches && e2.changedTouches.length ? e2.changedTouches[0] : e2, e2 = document.elementFromPoint(e2.clientX, e2.clientY), t2(), i2 && !i2.el.contains(e2) && (r2("spill"), this.onSpill({ dragEl: o2, putSortable: n2 })));
+        };
+        function ne() {
+        }
+        function oe() {
+        }
+        ne.prototype = { startIndex: null, dragStart: function(t2) {
+          t2 = t2.oldDraggableIndex;
+          this.startIndex = t2;
+        }, onSpill: function(t2) {
+          var e2 = t2.dragEl, n2 = t2.putSortable;
+          this.sortable.captureAnimationState(), n2 && n2.captureAnimationState();
+          t2 = X(this.sortable.el, this.startIndex, this.options);
+          t2 ? this.sortable.el.insertBefore(e2, t2) : this.sortable.el.appendChild(e2), this.sortable.animateAll(), n2 && n2.animateAll();
+        }, drop: c }, a(ne, { pluginName: "revertOnSpill" }), oe.prototype = { onSpill: function(t2) {
+          var e2 = t2.dragEl, t2 = t2.putSortable || this.sortable;
+          t2.captureAnimationState(), e2.parentNode && e2.parentNode.removeChild(e2), t2.animateAll();
+        }, drop: c }, a(oe, { pluginName: "removeOnSpill" });
+        var ie, re, ae, le, se, ce = [], ue = [], de = false, he = false, fe = false;
+        function pe(n2, o2) {
+          ue.forEach(function(t2, e2) {
+            e2 = o2.children[t2.sortableIndex + (n2 ? Number(e2) : 0)];
+            e2 ? o2.insertBefore(t2, e2) : o2.appendChild(t2);
+          });
+        }
+        function ge() {
+          ce.forEach(function(t2) {
+            t2 !== ae && t2.parentNode && t2.parentNode.removeChild(t2);
+          });
+        }
+        return Bt.mount(new function() {
+          function t2() {
+            for (var t3 in this.defaults = { scroll: true, forceAutoScrollFallback: false, scrollSensitivity: 30, scrollSpeed: 10, bubbleScroll: true }, this)
+              "_" === t3.charAt(0) && "function" == typeof this[t3] && (this[t3] = this[t3].bind(this));
+          }
+          return t2.prototype = { dragStarted: function(t3) {
+            t3 = t3.originalEvent;
+            this.sortable.nativeDraggable ? h(document, "dragover", this._handleAutoScroll) : this.options.supportPointer ? h(document, "pointermove", this._handleFallbackAutoScroll) : t3.touches ? h(document, "touchmove", this._handleFallbackAutoScroll) : h(document, "mousemove", this._handleFallbackAutoScroll);
+          }, dragOverCompleted: function(t3) {
+            t3 = t3.originalEvent;
+            this.options.dragOverBubble || t3.rootEl || this._handleAutoScroll(t3);
+          }, drop: function() {
+            this.sortable.nativeDraggable ? f(document, "dragover", this._handleAutoScroll) : (f(document, "pointermove", this._handleFallbackAutoScroll), f(document, "touchmove", this._handleFallbackAutoScroll), f(document, "mousemove", this._handleFallbackAutoScroll)), Jt(), Qt(), clearTimeout(g), g = void 0;
+          }, nulling: function() {
+            qt = zt = Wt = $t = Vt = Gt = Ut = null, Zt.length = 0;
+          }, _handleFallbackAutoScroll: function(t3) {
+            this._handleAutoScroll(t3, true);
+          }, _handleAutoScroll: function(e2, n2) {
+            var o2, i2 = this, r2 = (e2.touches ? e2.touches[0] : e2).clientX, a2 = (e2.touches ? e2.touches[0] : e2).clientY, t3 = document.elementFromPoint(r2, a2);
+            qt = e2, n2 || this.options.forceAutoScrollFallback || w || y || u ? (ee(e2, this.options, t3, n2), o2 = A(t3, true), !$t || Vt && r2 === Gt && a2 === Ut || (Vt && Jt(), Vt = setInterval(function() {
+              var t4 = A(document.elementFromPoint(r2, a2), true);
+              t4 !== o2 && (o2 = t4, Qt()), ee(e2, i2.options, t4, n2);
+            }, 10), Gt = r2, Ut = a2)) : this.options.bubbleScroll && A(t3, true) !== O() ? ee(e2, this.options, A(t3, false), false) : Qt();
+          } }, a(t2, { pluginName: "scroll", initializeByDefault: true });
+        }()), Bt.mount(oe, ne), Bt.mount(new function() {
+          function t2() {
+            this.defaults = { swapClass: "sortable-swap-highlight" };
+          }
+          return t2.prototype = { dragStart: function(t3) {
+            t3 = t3.dragEl;
+            te = t3;
+          }, dragOverValid: function(t3) {
+            var e2 = t3.completed, n2 = t3.target, o2 = t3.onMove, i2 = t3.activeSortable, r2 = t3.changed, a2 = t3.cancel;
+            i2.options.swap && (t3 = this.sortable.el, i2 = this.options, n2 && n2 !== t3 && (t3 = te, te = false !== o2(n2) ? (I(n2, i2.swapClass, true), n2) : null, t3 && t3 !== te && I(t3, i2.swapClass, false)), r2(), e2(true), a2());
+          }, drop: function(t3) {
+            var e2, n2, o2 = t3.activeSortable, i2 = t3.putSortable, r2 = t3.dragEl, a2 = i2 || this.sortable, l2 = this.options;
+            te && I(te, l2.swapClass, false), te && (l2.swap || i2 && i2.options.swap) && r2 !== te && (a2.captureAnimationState(), a2 !== o2 && o2.captureAnimationState(), n2 = te, t3 = (e2 = r2).parentNode, l2 = n2.parentNode, t3 && l2 && !t3.isEqualNode(n2) && !l2.isEqualNode(e2) && (i2 = B(e2), r2 = B(n2), t3.isEqualNode(l2) && i2 < r2 && r2++, t3.insertBefore(n2, t3.children[i2]), l2.insertBefore(e2, l2.children[r2])), a2.animateAll(), a2 !== o2 && o2.animateAll());
+          }, nulling: function() {
+            te = null;
+          } }, a(t2, { pluginName: "swap", eventProperties: function() {
+            return { swapItem: te };
+          } });
+        }()), Bt.mount(new function() {
+          function t2(o2) {
+            for (var t3 in this)
+              "_" === t3.charAt(0) && "function" == typeof this[t3] && (this[t3] = this[t3].bind(this));
+            o2.options.avoidImplicitDeselect || (o2.options.supportPointer ? h(document, "pointerup", this._deselectMultiDrag) : (h(document, "mouseup", this._deselectMultiDrag), h(document, "touchend", this._deselectMultiDrag))), h(document, "keydown", this._checkKeyDown), h(document, "keyup", this._checkKeyUp), this.defaults = { selectedClass: "sortable-selected", multiDragKey: null, avoidImplicitDeselect: false, setData: function(t4, e2) {
+              var n2 = "";
+              ce.length && re === o2 ? ce.forEach(function(t5, e3) {
+                n2 += (e3 ? ", " : "") + t5.textContent;
+              }) : n2 = e2.textContent, t4.setData("Text", n2);
+            } };
+          }
+          return t2.prototype = { multiDragKeyDown: false, isMultiDrag: false, delayStartGlobal: function(t3) {
+            t3 = t3.dragEl;
+            ae = t3;
+          }, delayEnded: function() {
+            this.isMultiDrag = ~ce.indexOf(ae);
+          }, setupClone: function(t3) {
+            var e2 = t3.sortable, t3 = t3.cancel;
+            if (this.isMultiDrag) {
+              for (var n2 = 0; n2 < ce.length; n2++)
+                ue.push(_(ce[n2])), ue[n2].sortableIndex = ce[n2].sortableIndex, ue[n2].draggable = false, ue[n2].style["will-change"] = "", I(ue[n2], this.options.selectedClass, false), ce[n2] === ae && I(ue[n2], this.options.chosenClass, false);
+              e2._hideClone(), t3();
+            }
+          }, clone: function(t3) {
+            var e2 = t3.sortable, n2 = t3.rootEl, o2 = t3.dispatchSortableEvent, t3 = t3.cancel;
+            this.isMultiDrag && (this.options.removeCloneOnHide || ce.length && re === e2 && (pe(true, n2), o2("clone"), t3()));
+          }, showClone: function(t3) {
+            var e2 = t3.cloneNowShown, n2 = t3.rootEl, t3 = t3.cancel;
+            this.isMultiDrag && (pe(false, n2), ue.forEach(function(t4) {
+              P(t4, "display", "");
+            }), e2(), se = false, t3());
+          }, hideClone: function(t3) {
+            var e2 = this, n2 = (t3.sortable, t3.cloneNowHidden), t3 = t3.cancel;
+            this.isMultiDrag && (ue.forEach(function(t4) {
+              P(t4, "display", "none"), e2.options.removeCloneOnHide && t4.parentNode && t4.parentNode.removeChild(t4);
+            }), n2(), se = true, t3());
+          }, dragStartGlobal: function(t3) {
+            t3.sortable;
+            !this.isMultiDrag && re && re.multiDrag._deselectMultiDrag(), ce.forEach(function(t4) {
+              t4.sortableIndex = B(t4);
+            }), ce = ce.sort(function(t4, e2) {
+              return t4.sortableIndex - e2.sortableIndex;
+            }), fe = true;
+          }, dragStarted: function(t3) {
+            var e2, n2 = this, t3 = t3.sortable;
+            this.isMultiDrag && (this.options.sort && (t3.captureAnimationState(), this.options.animation && (ce.forEach(function(t4) {
+              t4 !== ae && P(t4, "position", "absolute");
+            }), e2 = k(ae, false, true, true), ce.forEach(function(t4) {
+              t4 !== ae && C(t4, e2);
+            }), de = he = true)), t3.animateAll(function() {
+              de = he = false, n2.options.animation && ce.forEach(function(t4) {
+                T(t4);
+              }), n2.options.sort && ge();
+            }));
+          }, dragOver: function(t3) {
+            var e2 = t3.target, n2 = t3.completed, t3 = t3.cancel;
+            he && ~ce.indexOf(e2) && (n2(false), t3());
+          }, revert: function(t3) {
+            var n2, o2, e2 = t3.fromSortable, i2 = t3.rootEl, r2 = t3.sortable, a2 = t3.dragRect;
+            1 < ce.length && (ce.forEach(function(t4) {
+              r2.addAnimationState({ target: t4, rect: he ? k(t4) : a2 }), T(t4), t4.fromRect = a2, e2.removeAnimationState(t4);
+            }), he = false, n2 = !this.options.removeCloneOnHide, o2 = i2, ce.forEach(function(t4, e3) {
+              e3 = o2.children[t4.sortableIndex + (n2 ? Number(e3) : 0)];
+              e3 ? o2.insertBefore(t4, e3) : o2.appendChild(t4);
+            }));
+          }, dragOverCompleted: function(t3) {
+            var e2, n2 = t3.sortable, o2 = t3.isOwner, i2 = t3.insertion, r2 = t3.activeSortable, a2 = t3.parentEl, l2 = t3.putSortable, t3 = this.options;
+            i2 && (o2 && r2._hideClone(), de = false, t3.animation && 1 < ce.length && (he || !o2 && !r2.options.sort && !l2) && (e2 = k(ae, false, true, true), ce.forEach(function(t4) {
+              t4 !== ae && (C(t4, e2), a2.appendChild(t4));
+            }), he = true), o2 || (he || ge(), 1 < ce.length ? (o2 = se, r2._showClone(n2), r2.options.animation && !se && o2 && ue.forEach(function(t4) {
+              r2.addAnimationState({ target: t4, rect: le }), t4.fromRect = le, t4.thisAnimationDuration = null;
+            })) : r2._showClone(n2)));
+          }, dragOverAnimationCapture: function(t3) {
+            var e2 = t3.dragRect, n2 = t3.isOwner, t3 = t3.activeSortable;
+            ce.forEach(function(t4) {
+              t4.thisAnimationDuration = null;
+            }), t3.options.animation && !n2 && t3.multiDrag.isMultiDrag && (le = a({}, e2), e2 = v(ae, true), le.top -= e2.f, le.left -= e2.e);
+          }, dragOverAnimationComplete: function() {
+            he && (he = false, ge());
+          }, drop: function(t3) {
+            var e2 = t3.originalEvent, n2 = t3.rootEl, o2 = t3.parentEl, i2 = t3.sortable, r2 = t3.dispatchSortableEvent, a2 = t3.oldIndex, l2 = t3.putSortable, s2 = l2 || this.sortable;
+            if (e2) {
+              var c2, u2, d2, h2 = this.options, f2 = o2.children;
+              if (!fe)
+                if (h2.multiDragKey && !this.multiDragKeyDown && this._deselectMultiDrag(), I(ae, h2.selectedClass, !~ce.indexOf(ae)), ~ce.indexOf(ae))
+                  ce.splice(ce.indexOf(ae), 1), ie = null, W({ sortable: i2, rootEl: n2, name: "deselect", targetEl: ae, originalEvent: e2 });
+                else {
+                  if (ce.push(ae), W({ sortable: i2, rootEl: n2, name: "select", targetEl: ae, originalEvent: e2 }), e2.shiftKey && ie && i2.el.contains(ie)) {
+                    var p2 = B(ie), t3 = B(ae);
+                    if (~p2 && ~t3 && p2 !== t3)
+                      for (var g2, m2 = p2 < t3 ? (g2 = p2, t3) : (g2 = t3, p2 + 1); g2 < m2; g2++)
+                        ~ce.indexOf(f2[g2]) || (I(f2[g2], h2.selectedClass, true), ce.push(f2[g2]), W({ sortable: i2, rootEl: n2, name: "select", targetEl: f2[g2], originalEvent: e2 }));
+                  } else
+                    ie = ae;
+                  re = s2;
+                }
+              fe && this.isMultiDrag && (he = false, (o2[j].options.sort || o2 !== n2) && 1 < ce.length && (c2 = k(ae), u2 = B(ae, ":not(." + this.options.selectedClass + ")"), !de && h2.animation && (ae.thisAnimationDuration = null), s2.captureAnimationState(), de || (h2.animation && (ae.fromRect = c2, ce.forEach(function(t4) {
+                var e3;
+                t4.thisAnimationDuration = null, t4 !== ae && (e3 = he ? k(t4) : c2, t4.fromRect = e3, s2.addAnimationState({ target: t4, rect: e3 }));
+              })), ge(), ce.forEach(function(t4) {
+                f2[u2] ? o2.insertBefore(t4, f2[u2]) : o2.appendChild(t4), u2++;
+              }), a2 === B(ae) && (d2 = false, ce.forEach(function(t4) {
+                t4.sortableIndex !== B(t4) && (d2 = true);
+              }), d2 && r2("update"))), ce.forEach(function(t4) {
+                T(t4);
+              }), s2.animateAll()), re = s2), (n2 === o2 || l2 && "clone" !== l2.lastPutMode) && ue.forEach(function(t4) {
+                t4.parentNode && t4.parentNode.removeChild(t4);
+              });
+            }
+          }, nullingGlobal: function() {
+            this.isMultiDrag = fe = false, ue.length = 0;
+          }, destroyGlobal: function() {
+            this._deselectMultiDrag(), f(document, "pointerup", this._deselectMultiDrag), f(document, "mouseup", this._deselectMultiDrag), f(document, "touchend", this._deselectMultiDrag), f(document, "keydown", this._checkKeyDown), f(document, "keyup", this._checkKeyUp);
+          }, _deselectMultiDrag: function(t3) {
+            if (!(void 0 !== fe && fe || re !== this.sortable || t3 && N(t3.target, this.options.draggable, this.sortable.el, false) || t3 && 0 !== t3.button))
+              for (; ce.length; ) {
+                var e2 = ce[0];
+                I(e2, this.options.selectedClass, false), ce.shift(), W({ sortable: this.sortable, rootEl: this.sortable.el, name: "deselect", targetEl: e2, originalEvent: t3 });
+              }
+          }, _checkKeyDown: function(t3) {
+            t3.key === this.options.multiDragKey && (this.multiDragKeyDown = true);
+          }, _checkKeyUp: function(t3) {
+            t3.key === this.options.multiDragKey && (this.multiDragKeyDown = false);
+          } }, a(t2, { pluginName: "multiDrag", utils: { select: function(t3) {
+            var e2 = t3.parentNode[j];
+            e2 && e2.options.multiDrag && !~ce.indexOf(t3) && (re && re !== e2 && (re.multiDrag._deselectMultiDrag(), re = e2), I(t3, e2.options.selectedClass, true), ce.push(t3));
+          }, deselect: function(t3) {
+            var e2 = t3.parentNode[j], n2 = ce.indexOf(t3);
+            e2 && e2.options.multiDrag && ~n2 && (I(t3, e2.options.selectedClass, false), ce.splice(n2, 1));
+          } }, eventProperties: function() {
+            var n2 = this, o2 = [], i2 = [];
+            return ce.forEach(function(t3) {
+              var e2;
+              o2.push({ multiDragElement: t3, index: t3.sortableIndex }), e2 = he && t3 !== ae ? -1 : he ? B(t3, ":not(." + n2.options.selectedClass + ")") : B(t3), i2.push({ multiDragElement: t3, index: e2 });
+            }), { items: r(ce), clones: [].concat(ue), oldIndicies: o2, newIndicies: i2 };
+          }, optionListeners: { multiDragKey: function(t3) {
+            return "ctrl" === (t3 = t3.toLowerCase()) ? t3 = "Control" : 1 < t3.length && (t3 = t3.charAt(0).toUpperCase() + t3.substr(1)), t3;
+          } } });
+        }()), Bt;
+      });
+    }
+  });
+
+  // node_modules/classnames/index.js
+  var require_classnames = __commonJS({
+    "node_modules/classnames/index.js"(exports, module) {
+      (function() {
+        "use strict";
+        var hasOwn = {}.hasOwnProperty;
+        function classNames() {
+          var classes = [];
+          for (var i = 0; i < arguments.length; i++) {
+            var arg = arguments[i];
+            if (!arg)
+              continue;
+            var argType = typeof arg;
+            if (argType === "string" || argType === "number") {
+              classes.push(arg);
+            } else if (Array.isArray(arg)) {
+              if (arg.length) {
+                var inner = classNames.apply(null, arg);
+                if (inner) {
+                  classes.push(inner);
+                }
+              }
+            } else if (argType === "object") {
+              if (arg.toString === Object.prototype.toString) {
+                for (var key in arg) {
+                  if (hasOwn.call(arg, key) && arg[key]) {
+                    classes.push(key);
+                  }
+                }
+              } else {
+                classes.push(arg.toString());
+              }
+            }
+          }
+          return classes.join(" ");
+        }
+        if (typeof module !== "undefined" && module.exports) {
+          classNames.default = classNames;
+          module.exports = classNames;
+        } else if (typeof define === "function" && typeof define.amd === "object" && define.amd) {
+          define("classnames", [], function() {
+            return classNames;
+          });
+        } else {
+          window.classNames = classNames;
+        }
+      })();
+    }
+  });
+
+  // node_modules/tiny-invariant/dist/tiny-invariant.cjs.js
+  var require_tiny_invariant_cjs = __commonJS({
+    "node_modules/tiny-invariant/dist/tiny-invariant.cjs.js"(exports, module) {
+      "use strict";
+      var isProduction = false;
+      var prefix = "Invariant failed";
+      function invariant(condition, message) {
+        if (condition) {
+          return;
+        }
+        if (isProduction) {
+          throw new Error(prefix);
+        }
+        var provided = typeof message === "function" ? message() : message;
+        var value = provided ? prefix + ": " + provided : prefix;
+        throw new Error(value);
+      }
+      module.exports = invariant;
+    }
+  });
+
+  // node_modules/react-sortablejs/dist/index.js
+  var require_dist = __commonJS({
+    "node_modules/react-sortablejs/dist/index.js"(exports, module) {
+      var $8zHUo$sortablejs = require_Sortable_min();
+      var $8zHUo$classnames = require_classnames();
+      var $8zHUo$react = require_react();
+      var $8zHUo$tinyinvariant = require_tiny_invariant_cjs();
+      function $parcel$interopDefault(a) {
+        return a && a.__esModule ? a.default : a;
+      }
+      function $parcel$export(e, n, v, s) {
+        Object.defineProperty(e, n, { get: v, set: s, enumerable: true, configurable: true });
+      }
+      function $parcel$exportWildcard(dest, source) {
+        Object.keys(source).forEach(function(key) {
+          if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) {
+            return;
+          }
+          Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function get() {
+              return source[key];
+            }
+          });
+        });
+        return dest;
+      }
+      $parcel$export(module.exports, "Sortable", () => $882b6d93070905b3$re_export$Sortable);
+      $parcel$export(module.exports, "Direction", () => $882b6d93070905b3$re_export$Direction);
+      $parcel$export(module.exports, "DOMRect", () => $882b6d93070905b3$re_export$DOMRect);
+      $parcel$export(module.exports, "GroupOptions", () => $882b6d93070905b3$re_export$GroupOptions);
+      $parcel$export(module.exports, "MoveEvent", () => $882b6d93070905b3$re_export$MoveEvent);
+      $parcel$export(module.exports, "Options", () => $882b6d93070905b3$re_export$Options);
+      $parcel$export(module.exports, "PullResult", () => $882b6d93070905b3$re_export$PullResult);
+      $parcel$export(module.exports, "PutResult", () => $882b6d93070905b3$re_export$PutResult);
+      $parcel$export(module.exports, "SortableEvent", () => $882b6d93070905b3$re_export$SortableEvent);
+      $parcel$export(module.exports, "SortableOptions", () => $882b6d93070905b3$re_export$SortableOptions);
+      $parcel$export(module.exports, "Utils", () => $882b6d93070905b3$re_export$Utils);
+      $parcel$export(module.exports, "ReactSortable", () => $7fe8e3ea572bda7a$export$11bbed9ee0012c13);
+      function $eb03e74f8f7db1f3$export$1d0aa160432dfea5(node) {
+        if (node.parentElement !== null)
+          node.parentElement.removeChild(node);
+      }
+      function $eb03e74f8f7db1f3$export$6d240faa51aa562f(parent, newChild, index) {
+        const refChild = parent.children[index] || null;
+        parent.insertBefore(newChild, refChild);
+      }
+      function $eb03e74f8f7db1f3$export$77f49a256021c8de(customs) {
+        customs.forEach((curr) => $eb03e74f8f7db1f3$export$1d0aa160432dfea5(curr.element));
+      }
+      function $eb03e74f8f7db1f3$export$a6177d5829f70ebc(customs) {
+        customs.forEach((curr) => {
+          $eb03e74f8f7db1f3$export$6d240faa51aa562f(curr.parentElement, curr.element, curr.oldIndex);
+        });
+      }
+      function $eb03e74f8f7db1f3$export$4655efe700f887a(evt, list) {
+        const mode = $eb03e74f8f7db1f3$export$1fc0f6205829e19c(evt);
+        const parentElement = {
+          parentElement: evt.from
+        };
+        let custom = [];
+        switch (mode) {
+          case "normal":
+            const item = {
+              element: evt.item,
+              newIndex: evt.newIndex,
+              oldIndex: evt.oldIndex,
+              parentElement: evt.from
+            };
+            custom = [
+              item
+            ];
+            break;
+          case "swap":
+            const drag = {
+              element: evt.item,
+              oldIndex: evt.oldIndex,
+              newIndex: evt.newIndex,
+              ...parentElement
+            };
+            const swap = {
+              element: evt.swapItem,
+              oldIndex: evt.newIndex,
+              newIndex: evt.oldIndex,
+              ...parentElement
+            };
+            custom = [
+              drag,
+              swap
+            ];
+            break;
+          case "multidrag":
+            custom = evt.oldIndicies.map((curr, index) => ({
+              element: curr.multiDragElement,
+              oldIndex: curr.index,
+              newIndex: evt.newIndicies[index].index,
+              ...parentElement
+            }));
+            break;
+        }
+        const customs = $eb03e74f8f7db1f3$export$bc06a3af7dc65f53(custom, list);
+        return customs;
+      }
+      function $eb03e74f8f7db1f3$export$c25cf8080bd305ec(normalized, list) {
+        const a = $eb03e74f8f7db1f3$export$be2da95e6167b0bd(normalized, list);
+        const b = $eb03e74f8f7db1f3$export$eca851ee65ae17e4(normalized, a);
+        return b;
+      }
+      function $eb03e74f8f7db1f3$export$be2da95e6167b0bd(normalized, list) {
+        const newList = [
+          ...list
+        ];
+        normalized.concat().reverse().forEach((curr) => newList.splice(curr.oldIndex, 1));
+        return newList;
+      }
+      function $eb03e74f8f7db1f3$export$eca851ee65ae17e4(normalized, list, evt, clone) {
+        const newList = [
+          ...list
+        ];
+        normalized.forEach((curr) => {
+          const newItem = clone && evt && clone(curr.item, evt);
+          newList.splice(curr.newIndex, 0, newItem || curr.item);
+        });
+        return newList;
+      }
+      function $eb03e74f8f7db1f3$export$1fc0f6205829e19c(evt) {
+        if (evt.oldIndicies && evt.oldIndicies.length > 0)
+          return "multidrag";
+        if (evt.swapItem)
+          return "swap";
+        return "normal";
+      }
+      function $eb03e74f8f7db1f3$export$bc06a3af7dc65f53(inputs, list) {
+        const normalized = inputs.map((curr) => ({
+          ...curr,
+          item: list[curr.oldIndex]
+        })).sort((a, b) => a.oldIndex - b.oldIndex);
+        return normalized;
+      }
+      function $eb03e74f8f7db1f3$export$7553c81e62e31b7e(props) {
+        const { list, setList, children, tag, style, className, clone, onAdd, onChange, onChoose, onClone, onEnd, onFilter, onRemove, onSort, onStart, onUnchoose, onUpdate, onMove, onSpill, onSelect, onDeselect, ...options } = props;
+        return options;
+      }
+      var $7fe8e3ea572bda7a$var$store = {
+        dragging: null
+      };
+      var $7fe8e3ea572bda7a$export$11bbed9ee0012c13 = class extends (0, $8zHUo$react.Component) {
+        constructor(props) {
+          super(props);
+          this.ref = /* @__PURE__ */ (0, $8zHUo$react.createRef)();
+          const newList = [
+            ...props.list
+          ].map((item) => Object.assign(item, {
+            chosen: false,
+            selected: false
+          }));
+          props.setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+          (0, $parcel$interopDefault($8zHUo$tinyinvariant))(
+            !props.plugins,
+            `
+Plugins prop is no longer supported.
+Instead, mount it with "Sortable.mount(new MultiDrag())"
+Please read the updated README.md at https://github.com/SortableJS/react-sortablejs.
+      `
+          );
+        }
+        componentDidMount() {
+          if (this.ref.current === null)
+            return;
+          const newOptions = this.makeOptions();
+          (0, $parcel$interopDefault($8zHUo$sortablejs)).create(this.ref.current, newOptions);
+        }
+        componentDidUpdate(prevProps) {
+          if (prevProps.disabled !== this.props.disabled && this.sortable)
+            this.sortable.option("disabled", this.props.disabled);
+        }
+        render() {
+          const { tag, style, className, id } = this.props;
+          const classicProps = {
+            style,
+            className,
+            id
+          };
+          const newTag = !tag || tag === null ? "div" : tag;
+          return /* @__PURE__ */ (0, $8zHUo$react.createElement)(newTag, {
+            ref: this.ref,
+            ...classicProps
+          }, this.getChildren());
+        }
+        getChildren() {
+          const { children, dataIdAttr, selectedClass = "sortable-selected", chosenClass = "sortable-chosen", dragClass = "sortable-drag", fallbackClass = "sortable-falback", ghostClass = "sortable-ghost", swapClass = "sortable-swap-highlight", filter = "sortable-filter", list } = this.props;
+          if (!children || children == null)
+            return null;
+          const dataid = dataIdAttr || "data-id";
+          return (0, $8zHUo$react.Children).map(children, (child, index) => {
+            if (child === void 0)
+              return void 0;
+            const item = list[index] || {};
+            const { className: prevClassName } = child.props;
+            const filtered = typeof filter === "string" && {
+              [filter.replace(".", "")]: !!item.filtered
+            };
+            const className = (0, $parcel$interopDefault($8zHUo$classnames))(prevClassName, {
+              [selectedClass]: item.selected,
+              [chosenClass]: item.chosen,
+              ...filtered
+            });
+            return /* @__PURE__ */ (0, $8zHUo$react.cloneElement)(child, {
+              [dataid]: child.key,
+              className
+            });
+          });
+        }
+        get sortable() {
+          const el = this.ref.current;
+          if (el === null)
+            return null;
+          const key = Object.keys(el).find((k) => k.includes("Sortable"));
+          if (!key)
+            return null;
+          return el[key];
+        }
+        makeOptions() {
+          const DOMHandlers = [
+            "onAdd",
+            "onChoose",
+            "onDeselect",
+            "onEnd",
+            "onRemove",
+            "onSelect",
+            "onSpill",
+            "onStart",
+            "onUnchoose",
+            "onUpdate"
+          ];
+          const NonDOMHandlers = [
+            "onChange",
+            "onClone",
+            "onFilter",
+            "onSort"
+          ];
+          const newOptions = (0, $eb03e74f8f7db1f3$export$7553c81e62e31b7e)(this.props);
+          DOMHandlers.forEach((name) => newOptions[name] = this.prepareOnHandlerPropAndDOM(name));
+          NonDOMHandlers.forEach((name) => newOptions[name] = this.prepareOnHandlerProp(name));
+          const onMove1 = (evt, originalEvt) => {
+            const { onMove } = this.props;
+            const defaultValue = evt.willInsertAfter || -1;
+            if (!onMove)
+              return defaultValue;
+            const result = onMove(evt, originalEvt, this.sortable, $7fe8e3ea572bda7a$var$store);
+            if (typeof result === "undefined")
+              return false;
+            return result;
+          };
+          return {
+            ...newOptions,
+            onMove: onMove1
+          };
+        }
+        prepareOnHandlerPropAndDOM(evtName) {
+          return (evt) => {
+            this.callOnHandlerProp(evt, evtName);
+            this[evtName](evt);
+          };
+        }
+        prepareOnHandlerProp(evtName) {
+          return (evt) => {
+            this.callOnHandlerProp(evt, evtName);
+          };
+        }
+        callOnHandlerProp(evt, evtName) {
+          const propEvent = this.props[evtName];
+          if (propEvent)
+            propEvent(evt, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+        onAdd(evt) {
+          const { list, setList, clone } = this.props;
+          const otherList = [
+            ...$7fe8e3ea572bda7a$var$store.dragging.props.list
+          ];
+          const customs = (0, $eb03e74f8f7db1f3$export$4655efe700f887a)(evt, otherList);
+          (0, $eb03e74f8f7db1f3$export$77f49a256021c8de)(customs);
+          const newList = (0, $eb03e74f8f7db1f3$export$eca851ee65ae17e4)(customs, list, evt, clone).map((item) => Object.assign(item, {
+            selected: false
+          }));
+          setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+        onRemove(evt) {
+          const { list, setList } = this.props;
+          const mode = (0, $eb03e74f8f7db1f3$export$1fc0f6205829e19c)(evt);
+          const customs = (0, $eb03e74f8f7db1f3$export$4655efe700f887a)(evt, list);
+          (0, $eb03e74f8f7db1f3$export$a6177d5829f70ebc)(customs);
+          let newList = [
+            ...list
+          ];
+          if (evt.pullMode !== "clone")
+            newList = (0, $eb03e74f8f7db1f3$export$be2da95e6167b0bd)(customs, newList);
+          else {
+            let customClones = customs;
+            switch (mode) {
+              case "multidrag":
+                customClones = customs.map((item, index) => ({
+                  ...item,
+                  element: evt.clones[index]
+                }));
+                break;
+              case "normal":
+                customClones = customs.map((item) => ({
+                  ...item,
+                  element: evt.clone
+                }));
+                break;
+              case "swap":
+              default:
+                (0, $parcel$interopDefault($8zHUo$tinyinvariant))(true, `mode "${mode}" cannot clone. Please remove "props.clone" from <ReactSortable/> when using the "${mode}" plugin`);
+            }
+            (0, $eb03e74f8f7db1f3$export$77f49a256021c8de)(customClones);
+            customs.forEach((curr) => {
+              const index = curr.oldIndex;
+              const newItem = this.props.clone(curr.item, evt);
+              newList.splice(index, 1, newItem);
+            });
+          }
+          newList = newList.map((item) => Object.assign(item, {
+            selected: false
+          }));
+          setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+        onUpdate(evt) {
+          const { list, setList } = this.props;
+          const customs = (0, $eb03e74f8f7db1f3$export$4655efe700f887a)(evt, list);
+          (0, $eb03e74f8f7db1f3$export$77f49a256021c8de)(customs);
+          (0, $eb03e74f8f7db1f3$export$a6177d5829f70ebc)(customs);
+          const newList = (0, $eb03e74f8f7db1f3$export$c25cf8080bd305ec)(customs, list);
+          return setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+        onStart() {
+          $7fe8e3ea572bda7a$var$store.dragging = this;
+        }
+        onEnd() {
+          $7fe8e3ea572bda7a$var$store.dragging = null;
+        }
+        onChoose(evt) {
+          const { list, setList } = this.props;
+          const newList = list.map((item, index) => {
+            let newItem = item;
+            if (index === evt.oldIndex)
+              newItem = Object.assign(item, {
+                chosen: true
+              });
+            return newItem;
+          });
+          setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+        onUnchoose(evt) {
+          const { list, setList } = this.props;
+          const newList = list.map((item, index) => {
+            let newItem = item;
+            if (index === evt.oldIndex)
+              newItem = Object.assign(newItem, {
+                chosen: false
+              });
+            return newItem;
+          });
+          setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+        onSpill(evt) {
+          const { removeOnSpill, revertOnSpill } = this.props;
+          if (removeOnSpill && !revertOnSpill)
+            (0, $eb03e74f8f7db1f3$export$1d0aa160432dfea5)(evt.item);
+        }
+        onSelect(evt) {
+          const { list, setList } = this.props;
+          const newList = list.map((item) => Object.assign(item, {
+            selected: false
+          }));
+          evt.newIndicies.forEach((curr) => {
+            const index = curr.index;
+            if (index === -1) {
+              console.log(`"${evt.type}" had indice of "${curr.index}", which is probably -1 and doesn't usually happen here.`);
+              console.log(evt);
+              return;
+            }
+            newList[index].selected = true;
+          });
+          setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+        onDeselect(evt) {
+          const { list, setList } = this.props;
+          const newList = list.map((item) => Object.assign(item, {
+            selected: false
+          }));
+          evt.newIndicies.forEach((curr) => {
+            const index = curr.index;
+            if (index === -1)
+              return;
+            newList[index].selected = true;
+          });
+          setList(newList, this.sortable, $7fe8e3ea572bda7a$var$store);
+        }
+      };
+      __publicField($7fe8e3ea572bda7a$export$11bbed9ee0012c13, "defaultProps", {
+        clone: (item) => item
+      });
+      var $faefaad95e5fcca0$exports = {};
+      $parcel$exportWildcard(module.exports, $faefaad95e5fcca0$exports);
+    }
+  });
+
   // js/sidebar.jsx
   var import_react6 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // js/sidebar/tab-container.jsx
   var import_react5 = __toESM(require_react());
+  var import_react_sortablejs = __toESM(require_dist());
 
   // js/sidebar/tab.jsx
   var import_react4 = __toESM(require_react());
@@ -22969,6 +24403,75 @@
   // js/shim.js
   var webext = browser || chrome;
   var shim_default = webext;
+
+  // js/tab-manager.js
+  var TabManager = class {
+    constructor() {
+      this.tabs = [];
+      this.updateListeners = [];
+      this.stateUpdatePaused = false;
+      this.reloadTabsFromBrowser();
+      shim_default.tabs.onRemoved.addListener(this.reloadTabsFromBrowser.bind(this));
+      shim_default.tabs.onCreated.addListener(this.reloadTabsFromBrowser.bind(this));
+      shim_default.tabs.onDetached.addListener(this.reloadTabsFromBrowser.bind(this));
+      shim_default.tabs.onActivated.addListener(this.reloadTabsFromBrowser.bind(this));
+      shim_default.tabs.onUpdated.addListener(this.reloadTabsFromBrowser.bind(this));
+    }
+    async reloadTabsFromBrowser() {
+      const windowInfo = await shim_default.windows.getCurrent({ populate: true });
+      return this.setTabs(windowInfo.tabs);
+    }
+    async createTab(cookieStoreId = null) {
+      if (null === cookieStoreId) {
+        const currentTabActiveTab = this.tabs.filter((tab) => tab.active === true)[0];
+        cookieStoreId = currentTabActiveTab.cookieStoreId !== "firefox-default" ? currentTabActiveTab.cookieStoreId : contextual_identities_default.getDefaultContext().cookieStoreId;
+      }
+      await shim_default.tabs.create({
+        cookieStoreId
+      });
+      this.reloadTabsFromBrowser();
+    }
+    async setTabs(newTabs, compare = false) {
+      if (compare && !this.tabsChanged(newTabs)) {
+        return this;
+      }
+      this.stateUpdatePaused = true;
+      for (let index = 0; index <= newTabs.length - 1; index++) {
+        if (newTabs[index].index !== index) {
+          await browser.tabs.move(newTabs[index].id, { index });
+          newTabs[index].index = index;
+        }
+      }
+      this.tabs = newTabs;
+      this.stateUpdatePaused = false;
+      return this.fireUpdate();
+    }
+    onUpdate(callback) {
+      this.updateListeners.push(callback);
+      return this;
+    }
+    fireUpdate() {
+      if (this.stateUpdatePaused === true)
+        return this;
+      console.log("Firing update event.");
+      this.updateListeners.forEach((listener) => setTimeout(() => listener(this.tabs), 0));
+      return this;
+    }
+    tabsChanged(newTabs) {
+      let changed = false;
+      newTabs.forEach((tab, index) => {
+        if (this.tabs[index].id !== tab.id) {
+          changed = true;
+        }
+      });
+      this.tabs.forEach((tab, index) => {
+        if (newTabs[index].id !== tab.id) {
+          changed = true;
+        }
+      });
+      return changed;
+    }
+  };
 
   // js/contextual-identities.js
   var ContextualIdentities = class {
@@ -23042,6 +24545,8 @@
   // js/sidebar/tab.jsx
   var Tab = class extends import_react4.default.Component {
     onClick = async () => {
+      if (this.props.tab.active)
+        return;
       await shim_default.tabs.update(this.props.tab.id, { active: true });
     };
     onClickClose = async (event) => {
@@ -23071,26 +24576,13 @@
   var TabContainer = class extends import_react5.default.Component {
     constructor(props) {
       super(props);
+      this.tabManager = new TabManager();
       this.state = {
-        tabs: []
+        tabs: this.tabManager.tabs
       };
     }
     async componentDidMount() {
-      const deletedTabs = [];
-      const windowInfo = await shim_default.windows.getCurrent({ populate: true });
-      const loadTabInfo = async () => {
-        const tabs = await shim_default.tabs.query({ windowId: windowInfo.id });
-        this.setState({ tabs: tabs.filter((tab) => !deletedTabs.includes(tab.id)) });
-      };
-      await loadTabInfo();
-      shim_default.tabs.onRemoved.addListener((tabId) => {
-        deletedTabs.push(tabId);
-        loadTabInfo();
-      });
-      shim_default.tabs.onCreated.addListener(loadTabInfo);
-      shim_default.tabs.onDetached.addListener(loadTabInfo);
-      shim_default.tabs.onActivated.addListener(loadTabInfo);
-      shim_default.tabs.onUpdated.addListener(loadTabInfo);
+      this.tabManager.onUpdate((tabs) => this.setState({ tabs }));
     }
     render() {
       return /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("h2", {
@@ -23099,9 +24591,11 @@
       }, "Tabs", /* @__PURE__ */ import_react5.default.createElement("i", {
         id: "addTab",
         className: "fi fi-plus-a",
-        onClick: () => shim_default.tabs.create({ cookieStoreId: contextual_identities_default.getDefaultContext().cookieStoreId })
-      })), /* @__PURE__ */ import_react5.default.createElement("div", {
-        id: "tabs"
+        onClick: () => this.tabManager.createTab()
+      })), /* @__PURE__ */ import_react5.default.createElement(import_react_sortablejs.ReactSortable, {
+        id: "tabs",
+        list: this.state.tabs,
+        setList: (newState) => this.tabManager.setTabs(newState, true)
       }, this.state.tabs.map((tab) => /* @__PURE__ */ import_react5.default.createElement(Tab, {
         key: tab.id,
         tab
@@ -23127,6 +24621,12 @@
     root.render(/* @__PURE__ */ import_react6.default.createElement(Sidebar, null));
   })();
 })();
+/*!
+  Copyright (c) 2018 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/*! Sortable 1.15.0 - MIT | git://github.com/SortableJS/Sortable.git */
 /**
  * @license React
  * react-dom.development.js
