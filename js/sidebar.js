@@ -24554,7 +24554,12 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
     };
     render() {
       const tab = this.props.tab;
-      const className = ["tab", "lineItem", tab.active ? "active" : ""].join(" ");
+      const ci = contextual_identities_default.getContextByCookieStoreID(tab.cookieStoreId);
+      let color = "";
+      if (ci !== void 0) {
+        color = ci.color;
+      }
+      const className = ["tab", "lineItem", color, tab.active ? "active" : ""].join(" ");
       return /* @__PURE__ */ import_react4.default.createElement("div", {
         className,
         onClick: this.onClick
@@ -24566,7 +24571,7 @@ Please read the updated README.md at https://github.com/SortableJS/react-sortabl
         loading: tab.status === "loading"
       }), /* @__PURE__ */ import_react4.default.createElement(TabIconSet, {
         closeEvent: this.onClickClose,
-        ci: contextual_identities_default.getContextByCookieStoreID(tab.cookieStoreId)
+        ci
       }));
     }
   };

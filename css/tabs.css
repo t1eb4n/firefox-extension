@@ -28,3 +28,7 @@
 #tabs .tab span.tabTitle {width: 250px;}
 
 #tabs .tab.active {background: #393e46;}
+
+.tab.red span.tabTitle {color: rgb(255, 97, 61);}
+.tab.purple span.tabTitle {color: rgb(175, 81, 245);}
+.tab.yellow span.tabTitle {color: rgb(255, 203, 0);}

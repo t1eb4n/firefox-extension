@@ -18,12 +18,17 @@ export default class Tab extends React.Component {
 
   render() {
     const tab       = this.props.tab;
-    const className = ['tab', 'lineItem', tab.active ? 'active' : ''].join(' ');
+    const ci        = ciContainer.getContextByCookieStoreID(tab.cookieStoreId);
+    let color = '';
+    if(ci !== undefined) {
+      color = ci.color;
+    }
+    const className = ['tab', 'lineItem', color, tab.active ? 'active' : ''].join(' ');
 
     return <div className={className} onClick={this.onClick}>
       <TabFavIcon url={tab.favIconUrl} loading={tab.status === 'loading'} />
       <TabTitle title={tab.title} loading={tab.status === 'loading'} />
-      <TabIconSet closeEvent={this.onClickClose} ci={ciContainer.getContextByCookieStoreID(tab.cookieStoreId)} />
+      <TabIconSet closeEvent={this.onClickClose} ci={ci} />
     </div>
   }
 }
