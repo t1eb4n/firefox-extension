@@ -61,8 +61,6 @@ export default class TabManager {
   fireUpdate() {
     if(this.stateUpdatePaused === true) return this;
 
-    console.log('Firing update event.');
-
     this.updateListeners.forEach(listener => setTimeout(() => listener(this.tabs), 0));
     return this;
   }
